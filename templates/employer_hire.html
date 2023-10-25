@@ -1,0 +1,48 @@
+{% extends "employer_base.html" %}
+{% block body %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card mb-4">
+                <img src="{{ worker.profile_pic.url }}" class="card-img-top" alt="Worker Image">
+                <div class="card-body">
+                    {{ worker.user.f_name }} {{ worker.user.l_name }}</h5>
+                    <p class="card-text">Wage: ${{ worker.wage }}</p>
+                    <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#negotiateModal">Negotiate</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="negotiateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Negotiate with {{ worker.user.f_name }} {{ worker.user.l_name }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'negotiate' worker.id %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="wage">Wage:</label>
+                        <input type="text" class="form-control" id="wage" name="wage" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="start_date">Start Date:</label>
+                        <input type="date" class="form-control" id="start_date" name="start_date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="end_date">End Date:</label>
+                        <input type="date" class="form-control" id="end_date" name="end_date" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+{% endblock %}

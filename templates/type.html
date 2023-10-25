@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Web App Name</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom CSS for styling */
+        .section {
+            padding: 20px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .section img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .section-content {
+            margin-top: 20px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        body {
+            background-image: url('{% static 'images/background.jpg' %}');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        h2 {
+            color: #007BFF;
+        }
+
+        h3 {
+            color: #343A40;
+        }
+
+        p {
+            color: #6C757D;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="section">
+                    <img src="{% static 'images/employer.jpg' %}" alt="Employer Image">
+                    <h2>Employers</h2>
+                    <div class="section-content">
+                        <h3>Efficient Hiring Process</h3>
+                        <p>Employers can register on our platform to access a pool of skilled workers. Create your account to post job listings and connect with workers. Search for workers based on their skills, availability, and expertise. Find the right talent for your job requirements. Create job listings specifying job types, duration, and requirements. Workers can apply for your job opportunities. You can hire workers for specific days to meet your project timelines. Find workers who match your availability needs.</p>
+                    </div>
+                    <div class="btn-container">
+                        <a href="{% url 'employer_reg' %}" class="btn btn-primary">Register as Employer</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="section worker-section">
+                    <img src="{% static 'images/worker.jpg' %}" alt="Worker Image">
+                    <h2 style="padding-top:1rem;">Workers</h2>
+                    <div class="section-content">
+                        <h3>Find Job Opportunities Easily</h3>
+                        <p>Our platform provides workers with a convenient platform to search and apply for 
+                            temporary job opportunities in various industries. Easily find job listings that
+                            match your skills and availability. Workers can create profiles and register on 
+                            our platform. You can specify your desired wage and provide other relevant details.
+                            Mention your available days to help employers find workers who match their project timelines. 
+                            Accept or decline employers' requests to hire you for job opportunities. Communicate and 
+                            collaborate with employers for successful project completion.</p>
+                    </div>
+                    <div class="btn-container">
+                        <a href="{% url 'worker_reg' %}" class="btn btn-primary">Register as Worker</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>NativeHire - Your Job Connection</title>
+    <style>
+        body {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{% static 'images/background.jpg' %}');
+            background-size: cover;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        .video-container {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: jump 3s infinite;
+        }
+
+        @keyframes jump {
+            0% {
+                transform: translateY(0);
+            }
+            25% {
+                transform: translateY(-10px);
+            }
+            50% {
+                transform: translateY(0);
+            }
+            75% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .content-container {
+            text-align: center;
+            padding: 20px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .logo {
+            display: block;
+            margin: 0 auto 20px;
+            max-width: 100%;
+            height: auto; 
+        }
+
+        .app-title {
+            font-size: 2.5rem;
+            margin: 20px 0;
+        }
+
+        .app-description {
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .cta-button {
+            padding: 15px 20px; 
+            border-radius: 5px;
+            font-size: 1rem;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-button.employer {
+            background: #FF5733;
+        }
+
+        .cta-button.worker {
+            background: #338DFF;
+        }
+
+        .cta-button:hover {
+            background: #333;
+        }
+
+        .benefits {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .benefits h3 {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .benefits h5 {
+            font-size: 1.25rem;
+            margin-top: 10px;
+            color: #FF5733;
+        }
+
+        .benefits p {
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .content-container {
+                padding: 10px;
+            }
+
+            .app-title {
+                font-size: 2rem;
+            }
+
+            .app-description {
+                font-size: 0.9rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .cta-button {
+                width: 100%;
+                max-width: 250px; 
+            }
+
+            .benefits h3,
+            .benefits h5,
+            .benefits p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        <video class="video" autoplay muted loop>
+            <source src="{% static 'videos/video.mp4' %}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="content-container">
+            <img src="{% static 'images/logo-no-background.png' %}" alt="NativeHire Logo" class="logo">
+            <h1 class="app-title">Welcome to NativeHire</h1>
+            <p class="app-description">Your bridge to connecting with skilled workers and finding temporary job opportunities.</p>
+            <div class="cta-buttons">
+                <a href="{% url 'user_login' %}" class="cta-button employer">Get Started</a>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <a href="#benefits" class="scrollto wow fadeInUp delay-5s" style="text-decoration: none;">
+                        <p class="center-text">
+                            <span style="color: white;">SEE MORE</span><br>
+                            <span style="color: white;"><i class="fa fa-angle-down"></i></span>
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container benefits" id="benefits">
+        <h3>For Workers</h3>
+        <h5>Find Job Opportunities Easily</h5>
+        <p>The app provides workers with a convenient platform to search and apply for temporary job opportunities in various industries. Workers can easily find job listings that match their skills and availability.</p>
+        <h5>Showcase Skills and Availability</h5>
+        <p>Workers can create profiles that showcase their skills, experience, and availability. They can update their availability in real-time, making it easier for employers to find suitable candidates for their temporary job needs.</p>
+        <h5>Flexible Working</h5>
+        <p>NativeHire offers workers the flexibility to choose the jobs that suit their schedule and preferences. Workers can take on jobs that align with their expertise and desired work-life balance.</p>
+        <h5>Build a Reputation</h5>
+        <p>Workers can receive ratings and reviews from employers after completing jobs. Positive reviews can help workers build a good reputation and increase their chances of getting hired for future opportunities.</p>
+        <h3>For Employers</h3>
+        <h5>Efficient Hiring Process</h5>
+        <p>NativeHire streamlines the hiring process for employers, enabling them to find skilled workers quickly and easily. Employers can post job listings, specify their requirements, and connect with workers who match their needs.</p>
+        <h5>Access to a Skilled Workforce</h5>
+        <p>Employers have access to a diverse pool of skilled workers across various industries, giving them the flexibility to find the right talent for their short-term projects. They can review worker profiles, including skills, experience, and ratings, to make informed hiring decisions.</p>
+        <h5>Real-time Availability Information</h5>
+        <p>Employers can view workers' real-time availability, helping them make immediate hiring decisions based on their project timelines. This feature ensures that employers can find workers who can start working quickly.</p>
+        <h5>Cost-Effective Solution</h5>
+        <p>NativeHire offers a cost-effective solution for employers who require temporary workers. Employers can post job listings, review worker profiles, and hire the right talent without the overhead of a long-term employment contract.</p>
+        <h5>Rating and Review System</h5>
+        <p>Employers can rate and review workers after a job is completed, helping build a transparent and trustworthy community. This system assists employers in making informed hiring decisions and recognizing top-performing workers.</p>
+    </div>
+    <script src="https://kit.fontawesome.com/99c8e7f304.js" crossorigin="anonymous"></script>
+</body>
+</html>
