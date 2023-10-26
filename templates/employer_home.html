@@ -14,7 +14,12 @@
                 {% endif %}
                 <div class="col-md-3">
                     <div class="card mb-4">
-                        <img src="{{ i.user.profile_pic.url }}" class="card-img-top" alt="Worker Image">
+                        {% for j in customers %}
+                        {% if i.user.id == j.user.id %}
+                        <img src="{{ j.profile_pic.url }}" class="card-img-top" alt="Worker Image">
+                        {% endif %}
+                        {% endfor %}
+
                         <div class="card-body">
                             <h5 class="card-title">{{ i.user.username }}</h5>
                             <p class="card-text">{{ i.type.job_type }}</p>

@@ -1,23 +1,67 @@
 {% extends "employer_base.html" %}
 {% block body %}
+<style>
+    body {
+        color: white;
+    }
+
+    .negotiate-button {
+        color: black; 
+    }
+    .modal{
+        color: black;
+    }
+</style>
 <div class="container mt-4">
     <div class="row">
-        <div class="col-md-6 offset-md-3">
+        <div class="col-md-6">
             <div class="card mb-4">
-                <img src="{{ worker.profile_pic.url }}" class="card-img-top" alt="Worker Image">
+                {% for j in customer %}
+                {% if worker.user.id == j.user.id %}
+                <img src="{{ j.profile_pic.url }}" class="card-img-top" alt="Worker Image">
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-4">
                 <div class="card-body">
-                    {{ worker.user.f_name }} {{ worker.user.l_name }}</h5>
-                    <p class="card-text">Wage: ${{ worker.wage }}</p>
-                    <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#negotiateModal">Negotiate</a>
+                    {% for j in customer %}
+                    {% if worker.user.id == j.user.id %}
+                    <h4 class="card-title text-center">Worker Details</h4>
+                    <h2 class="card-title text-center mb-3">{{ worker.user.first_name }} {{ worker.user.last_name }}</h2>
+                    <p class="card-text h5">Phone Number: (+91) {{ j.phone_no }}</p>
+                    <p class="card-text h6">Location: {{ j.location }}</p>
+                    <p class="card-text h6">User Type: {{ j.user_type }}</p>
+                    <p class="card-text h5">Wage: ${{ worker.wage }}</p>
+                    <div class="availability-section">
+                        <h3>Availability</h3>
+                        <p class="lead">
+                            Available on:
+                            {% if worker.availability.monday %} Monday{% endif %}
+                            {% if worker.availability.tuesday %}, Tuesday{% endif %}
+                            {% if worker.availability.wednesday %}, Wednesday{% endif %}
+                            {% if worker.availability.thursday %}, Thursday{% endif %}
+                            {% if worker.availability.friday %}, Friday{% endif %}
+                            {% if worker.availability.saturday %}, Saturday{% endif %}
+                            {% if worker.availability.sunday %}, Sunday{% endif %}
+                        </p>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="text-center">
+                    <a href="#" class="btn btn-primary btn-sm negotiate-button" data-toggle="modal" data-target="#negotiateModal">Negotiate</a>
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="negotiateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+</div>
+<div class="modal fade" id="negotiateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Negotiate with {{ worker.user.f_name }} {{ worker.user.l_name }}</h5>
+                <h4 class="modal-title" id="exampleModalLabel">Negotiate with {{ worker.user.first_name }} {{ worker.user.last_name }}</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -26,23 +70,23 @@
                 <form method="post" action="{% url 'negotiate' worker.id %}">
                     {% csrf_token %}
                     <div class="form-group">
-                        <label for="wage">Wage:</label>
+                        <label for="wage" class="h5">Wage:</label>
                         <input type="text" class="form-control" id="wage" name="wage" required>
                     </div>
                     <div class="form-group">
-                        <label for="start_date">Start Date:</label>
+                        <label for="start_date" class="h5">Start Date:</label>
                         <input type="date" class="form-control" id="start_date" name="start_date" required>
                     </div>
                     <div class="form-group">
-                        <label for="end_date">End Date:</label>
+                        <label for "end_date" class="h5">End Date:</label>
                         <input type="date" class="form-control" id="end_date" name="end_date" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
-</div>
-
 </div>
 {% endblock %}

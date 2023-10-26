@@ -3,6 +3,7 @@ from django.views import View
 from django.contrib.auth import authenticate, login
 from .models import *
 from django.contrib.auth.models import User
+from django.core.files.storage import FileSystemStorage
 
 
 def base(request):
@@ -71,16 +72,23 @@ class user_login(View):
             customer = Customer.objects.filter(user=user).first()
             if customer:
                 if customer.user_type == 'worker':
+                    worker = Worker.objects.get(user=user)
+                    hiring_requests = worker.hiring_requests.all()
                     login(request, user)
                     workers = Worker.objects.all()
-                    customers = Customer.objects.all()
-                    return render(request, 'worker_home.html', {'workers': workers, 'customers': customers})
+                    customers = Customer.objects.filter(user=request.user.id).first()
+                    print("User details ",request.user)
+                    print("prof pic ",customers.profile_pic.url)
+                    hiring_requests = Hiring.objects.filter(worker=worker)
+                    hiring_requests_count = hiring_requests.count()
+                    return render(request, 'worker_home.html', {'worker': worker, 'workers': workers, 'customers': customers, 'hiring_requests': hiring_requests, 'hiring_requests_count': hiring_requests_count})
                 elif customer.user_type == 'employer':
                     login(request, user)
                     employer = customer
                     workers = Worker.objects.all()
-                    customers = Customer.objects.all()
-                    return render(request, 'employer_home.html', {'employer': employer, 'workers': workers, 'customers': customers})
+                    customers = Customer.objects.all() 
+                    availability = Availability.objects.all()
+                    return render(request, 'employer_home.html', {'employer': employer, 'workers': workers,'availability':availability,'customers':customers})
             else:
                 return HttpResponse("Sorry, user does not exist")
         else:
@@ -98,11 +106,11 @@ def w_base(request, user_name):
     availability = worker.worker.availability
     return render(request, 'worker_home.html', {'worker': worker, 'availability': availability})
 
-def e_home(request, user_name):
-    employer = Customer.objects.get(user__username=user_name)
-    workers = Worker.objects.all()
-    customers = Customer.objects.all()
-    return render(request, 'employer_home.html', {'employer': employer, 'workers': workers, 'customers': customers})
+# def e_home(request, user_name):
+#     employer = Customer.objects.get(user__username=user_name)
+#     workers = Worker.objects.all()
+#     customers = Customer.objects.all()
+#     return render(request, 'employer_home.html', {'employer': employer, 'workers': workers, 'customers': customers})
 
 def admin_emp(request):
     emp = Customer.objects.all()
@@ -121,6 +129,7 @@ class worker_reg(View):
                                     password=request.POST.get('password')
                                     )
         data.save()
+    
         customer = Customer(user=data,
                             phone_no=request.POST.get('phone_no'),
                             profile_pic=request.FILES.get('profile_pic'),
@@ -163,8 +172,9 @@ class worker_reg(View):
         return redirect('/')
 
 def employer_hire(request, worker_id):
+    customer = Customer.objects.all()
     worker = get_object_or_404(Worker, id=worker_id)
-    return render(request, 'employer_hire.html', {'worker': worker})
+    return render(request, 'employer_hire.html', {'worker': worker,'customer':customer})
 
 def negotiate(request, worker_id):
     worker = get_object_or_404(Worker, id=worker_id)
@@ -183,7 +193,23 @@ def negotiate(request, worker_id):
             cost=wage
         )
         hiring.save()
+        message = f"You have received a hiring request from {employer.user.username}."
+        notification = Notification.objects.create(worker=worker, hiring=hiring, message=message)
+        notification.save()
         return HttpResponse('Worker booked')
     else:
         return HttpResponse('No associated employer found for the current user.')
+
+def accept_hiring(request, hiring_id):
+    hiring = get_object_or_404(Hiring, id=hiring_id)
+
+    hiring.accept_request()
+    return redirect('worker_home')
+
+def reject_hiring(request, hiring_id):
+    hiring = get_object_or_404(Hiring, id=hiring_id)
+
+
+    hiring.reject_request()
+    return redirect('worker_home')
 

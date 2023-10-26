@@ -1,5 +1,4 @@
 from django.db import models
-from django.core.validators import MinLengthValidator, RegexValidator
 from django.utils import timezone
 from django.contrib.auth.models import User
 
@@ -35,15 +34,45 @@ class Employer(models.Model):
 class Worker(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     type = models.ForeignKey(Type, on_delete=models.CASCADE, null=True)
+    hiring_requests = models.ManyToManyField('Hiring', related_name='workers')
     availability = models.ForeignKey(Availability, on_delete=models.CASCADE, null=True)
     wage = models.IntegerField(null=True)
     experience = models.IntegerField(null=True)
 
 class Hiring(models.Model):
-    employer = models.ForeignKey(Employer, on_delete=models.CASCADE)
-    worker = models.ForeignKey(Worker, on_delete=models.CASCADE)
+    STATUS_CHOICES = (
+        ('Pending', 'Pending'),
+        ('Accepted', 'Accepted'),
+        ('Rejected', 'Rejected'),
+    )
+    employer = models.ForeignKey('Employer', on_delete=models.CASCADE)
+    worker = models.ForeignKey('Worker', on_delete=models.CASCADE)
     start_date = models.DateField()
     end_date = models.DateField()
     hire_posting = models.DateTimeField(default=timezone.now)
     is_hired = models.BooleanField(default=False)
     cost = models.IntegerField()
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Pending')
+
+    def accept_request(self):
+        self.status = 'Accepted'
+        self.save()
+
+    def reject_request(self):
+        self.status = 'Rejected'
+        self.save()
+
+    def save(self, *args, **kwargs):
+        if self.status == 'Accepted':
+            self.is_hired = True
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"Hiring ID {self.id} - {self.worker} hired by {self.employer}"
+
+class Notification(models.Model):
+    worker = models.ForeignKey(Worker, on_delete=models.CASCADE)
+    hiring = models.ForeignKey(Hiring, on_delete=models.CASCADE)
+    message = models.TextField()
+    is_read = models.BooleanField(default=False)
+
