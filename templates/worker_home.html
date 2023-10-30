@@ -98,11 +98,11 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title worker-name">Welcome, Worker {{ worker.user.username }}</h5>
+                        <h5 class="card-title worker-name">Welcome,  {{ worker.user.username }}<br> Job Type : {{worker.job_types}} </h5>
                         <p class="card-text">Your bookings, notifications, and more.</p>
-                        <a href="#" class="btn btn-custom btn-block">Set Availability</a>
+                        <a href="{% url 'set_availability' %}" class="btn btn-custom btn-block">Set Availability</a>
                     </div>
-                </div>
+                </div> 
             </div>
         </div>
     </div>
@@ -111,14 +111,13 @@
         <div class="availability-section">
             <h3>Availability</h3>
             <p class="lead">
-                Available on:
-                {% if worker.availability.monday %} Monday{% endif %}
-                {% if worker.availability.tuesday %}, Tuesday{% endif %}
-                {% if worker.availability.wednesday %}, Wednesday{% endif %}
-                {% if worker.availability.thursday %}, Thursday{% endif %}
-                {% if worker.availability.friday %}, Friday{% endif %}
-                {% if worker.availability.saturday %}, Saturday{% endif %}
-                {% if worker.availability.sunday %}, Sunday{% endif %}
+                <b>Available on:
+                {% for day, available in worker.availability.items %}
+                    {% if available %}
+                        {{ day }},
+                    {% endif %}
+                {% endfor %}
+                </b>
             </p>
         </div>
         
@@ -127,30 +126,38 @@
             <h3>Notifications</h3>
             <ul class="list-group">
                 {% for notification in worker.notification_set.all %}
-                    <li class="list-group-item">{{ notification.message }}</li>
+                    {% if notification.hiring.status == 'Pending' %}
+                        <li class="list-group-item">{{ notification.messages }}</li>
+                    {% endif %}
                 {% endfor %}
+                {% comment %} {% if notification.hiring.status == 'Accepted' or 'Rejected' %}
+                    
+                {% endif %} {% endcomment %}
             </ul>
         </div>
 
-        <!-- Hiring Requests Section -->
         <div class="hiring-requests-section">
-            <h3>Hiring Requests ({{ hiring_requests|length }})</h3>
+            <h3>Hiring Requests ({{ hiring_requests_count }})</h3>
             <ul class="list-group">
+                {% if hiring_requests_count == 0  %}
+                        <p>YOU'VE GOT NO HIRING REQUESTS</p>
+                {% endif %}
                 {% for hiring in hiring_requests %}
-                    <li class="list-group-item">
-                        <p>You have received a hiring request from {{ hiring.employer.user.username }}</p>
-                        <p>Start Date: {{ hiring.start_date }}</p>
-                        <p>End Date: {{ hiring.end_date }}</p>
-                        <p>Wage: ${{ hiring.cost }}</p>
-                        <form method="post">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-primary btn-custom">Accept</button>
-                        </form>
-                        <form method="post">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-danger">Reject</button>
-                        </form>
-                    </li>
+                                            <li class="list-group-item">
+                            <p>You have received a hiring request from {{ hiring.employer.user.username }}</p>
+                            <p>Start Date: {{ hiring.start_date }}</p>
+                            <p>End Date: {{ hiring.end_date }}</p>
+                            <p>Wage: ${{ hiring.cost }}</p>
+                            <form method="post" action = "{% url 'accept_hiring' hiring_id=hiring.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary btn-custom">Accept</button>
+                            </form>
+                            <form method="post", action="{% url 'reject_hiring' hiring_id=hiring.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Reject</button>
+                            </form>
+                        </li>
+                
                 {% endfor %}
             </ul>
         </div>

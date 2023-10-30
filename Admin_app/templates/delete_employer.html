@@ -1,0 +1,35 @@
+{% extends 'index.html' %}
+{% load static %} 
+{% block body %}
+<div class="container">
+  <h2>Delete Employers</h2>
+  <div style="background-color:white; padding: 20px;">
+    <table style="border-collapse: collapse; width: 100%;">
+    <thead>
+        <tr style="background-color: #007BFF; color: white;">
+            <th style="border: 1px solid #ccc; padding: 8px;">First Name</th>
+            <th style="border: 1px solid #ccc; padding: 8px;">Last Name</th>
+            <th style="border: 1px solid #ccc; padding: 8px;">User ID</th>
+            <th style="border: 1px solid #ccc; padding: 8px;">Date Joined</th>
+            <th style="border: 1px solid #ccc; padding: 8px;">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in employer %}
+        <tr>
+            <td style="border: 1px solid #ccc; padding: 8px;">{{ i.user.first_name }}</td>
+            <td style="border: 1px solid #ccc; padding: 8px;">{{ i.user.last_name }}</td>
+            <td style="border: 1px solid #ccc; padding: 8px;">{{ i.user.id }}</td>
+            <td style="border: 1px solid #ccc; padding: 8px;">{{ i.user.date_joined }}</td>
+          <td>
+            <form method="POST" action="{% url 'Admin_app:delete_emp' i.user.id %}">
+              {% csrf_token %}
+              <button style="border: 1px solid #ccc; padding: 8px;" type="submit" class="btn btn-danger">Delete</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

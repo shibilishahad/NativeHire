@@ -87,6 +87,13 @@
         <h2>Employer Registration</h2>
         <form method="POST" action="{% url 'employer_reg' %}" enctype="multipart/form-data">
             {% csrf_token %}
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
             <div class="form-group">
                 <label for="user_type">User Type</label>
                 <input type="hidden" id="user_type" name="user_type" value="employer">EMPLOYER

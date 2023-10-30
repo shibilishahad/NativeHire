@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from Admin_app.models import TypeOfJobs
 
 class Customer(models.Model):
     USER_TYPES = (
@@ -14,30 +15,40 @@ class Customer(models.Model):
     user_type = models.CharField(max_length=8, choices=USER_TYPES)
     def __str__(self):
         return self.user.username
-        
-class Type(models.Model):
-    id = models.AutoField(primary_key=True)
-    job_type = models.CharField(max_length=50)
 
-class Availability(models.Model):
-    monday = models.BooleanField(default=False)
-    tuesday = models.BooleanField(default=False)
-    wednesday = models.BooleanField(default=False)
-    thursday = models.BooleanField(default=False)
-    friday = models.BooleanField(default=False)
-    saturday = models.BooleanField(default=False)
-    sunday = models.BooleanField(default=False)
+
+
 
 class Employer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+
+# class JobType(models.Model):
+#     job_types = models.ForeignKey(TypeOfJobs, on_delete=models.CASCADE)
+
 class Worker(models.Model):
+    dict ={
+        "Monday": True,
+        "Tuesday": True,
+        "Wednesday": True,
+        "Thursday": True,
+        "Friday": True,
+        "Saturday": True,
+        "Sunday": True,
+    }
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    type = models.ForeignKey(Type, on_delete=models.CASCADE, null=True)
+    # type = models.ForeignKey(Dummy, on_delete=models.CASCADE, null=True)
     hiring_requests = models.ManyToManyField('Hiring', related_name='workers')
-    availability = models.ForeignKey(Availability, on_delete=models.CASCADE, null=True)
+    availability = models.JSONField(default=dict)
     wage = models.IntegerField(null=True)
     experience = models.IntegerField(null=True)
+    # jobtype = models.JSONField()
+    # type_of_jobs = models.ForeignKey(TypeOfJobs, on_delete=models.CASCADE)
+    job_types = models.ForeignKey(TypeOfJobs, on_delete=models.CASCADE)
+
+
+
+
 
 class Hiring(models.Model):
     STATUS_CHOICES = (
@@ -73,6 +84,6 @@ class Hiring(models.Model):
 class Notification(models.Model):
     worker = models.ForeignKey(Worker, on_delete=models.CASCADE)
     hiring = models.ForeignKey(Hiring, on_delete=models.CASCADE)
-    message = models.TextField()
+    messages = models.TextField()
     is_read = models.BooleanField(default=False)
 

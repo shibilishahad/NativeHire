@@ -37,14 +37,8 @@
                     <div class="availability-section">
                         <h3>Availability</h3>
                         <p class="lead">
-                            Available on:
-                            {% if worker.availability.monday %} Monday{% endif %}
-                            {% if worker.availability.tuesday %}, Tuesday{% endif %}
-                            {% if worker.availability.wednesday %}, Wednesday{% endif %}
-                            {% if worker.availability.thursday %}, Thursday{% endif %}
-                            {% if worker.availability.friday %}, Friday{% endif %}
-                            {% if worker.availability.saturday %}, Saturday{% endif %}
-                            {% if worker.availability.sunday %}, Sunday{% endif %}
+                            <b>Available on:</b>
+                            <li>{{worker.availability}}</li><br>
                         </p>
                     </div>
                     {% endif %}
@@ -78,9 +72,21 @@
                         <input type="date" class="form-control" id="start_date" name="start_date" required>
                     </div>
                     <div class="form-group">
-                        <label for "end_date" class="h5">End Date:</label>
+                        <label for="end_date" class="h5">End Date:</label>
                         <input type="date" class="form-control" id="end_date" name="end_date" required>
                     </div>
+                    
+                    <script>
+                        var currentDate = new Date().toISOString().slice(0, 10);
+                        var startDateInput = document.getElementById('start_date');
+                        var endDateInput = document.getElementById('end_date');
+                    
+                        startDateInput.setAttribute('min', currentDate); // Set minimum date for Start Date
+                    
+                        startDateInput.addEventListener('change', function () {
+                            endDateInput.min = startDateInput.value; // Update minimum date for End Date based on Start Date
+                        });
+                    </script>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>

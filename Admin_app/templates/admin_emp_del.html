@@ -1,0 +1,44 @@
+{% extends 'index.html' %}
+{% load static %} 
+{% block body %}
+
+<div style="background-color:white; padding: 20px;">
+    <table style="border-collapse: collapse; width: 100%;">
+        <thead>
+            <tr style="background-color: #007BFF; color: white;">
+                <th style="border: 1px solid #ccc; padding: 8px;">ID</th>
+                <th style="border: 1px solid #ccc; padding: 8px;">First Name</th>
+                <th style="border: 1px solid #ccc; padding: 8px;">Last Name</th>
+                <th style="border: 1px solid #ccc; padding: 8px;">Phone Number</th>
+                <th style="border: 1px solid #ccc; padding: 8px;">Location</th>
+                <th style="border: 1px solid #ccc; padding: 8px;">Email</th>
+                <th style="border: 1px solid #ccc; padding: 8px;">Created Date</th>
+                <th style="border: 1px solid #ccc; padding: 8px;">Username</th>
+                <th style="border: 1px solid #ccc; padding: 8px;">User Type</th>
+                <th style="border: 1px solid #ccc; padding: 8px;">Available days</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in emp %}
+            {% if i.user_type == 'worker' %}
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 8px;">{{ i.user_id }}</td>
+                <a href="{% url 'Admin_app:delete_employer' i.user_id %}">Delete</a>
+                <td style="border: 1px solid #ccc; padding: 8px;">{{ i.user.first_name }}</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">{{ i.user.last_name }}</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">{{ i.phone_no }}</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">{{ i.location }}</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">{{ i.user.email }}</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">{{ i.user.date_joined }}</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">{{ i.user.username }}</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">{{ i.user_type }}</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">{{ i.user.wage }}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

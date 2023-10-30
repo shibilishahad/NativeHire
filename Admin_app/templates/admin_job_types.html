@@ -1,0 +1,98 @@
+{% extends 'index.html' %}
+{% block body %}
+{% load static %}
+<style>
+  .job-type-container {
+    background-color: #ffffff;
+    padding: 20px;
+}
+
+.job-type-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table-header {
+    background-color: #007BFF;
+    color: white;
+}
+
+.job-type-container table th, .job-type-container table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+}
+
+.job-type-form {
+    margin-top: 20px;
+}
+
+.job-type-form h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.job-type-form form {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+}
+
+.job-type-form label {
+    margin-bottom: 5px;
+}
+
+.job-type-form input[type="text"] {
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+.job-type-form button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.job-type-form button:hover {
+    background-color: #0056b3;
+}
+
+</style>
+<div class="job-type-container">
+    <table class="job-type-table">
+        <thead>
+            <tr class="table-header">
+                <th>ID</th>
+                <th>Job Type</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in job_types %}        
+                <tr>
+                    <td>{{ i.id }}</td>
+                    <td>{{ i }}</td>
+                    <td><form method="post" action="{% url 'Admin_app:TypeView' %}">
+                      {% csrf_token %}
+                      <input type="hidden" name="type_id" value="{{ i.id }}">
+                      <button type="submit" class="btn btn-danger" name="delete_type">Delete</button>
+                  </form>
+                </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="job-type-form">
+  <h2>Add New Job Type</h2>
+  <form method="post" action="{% url 'Admin_app:TypeView' %}">
+      {% csrf_token %}
+      <label for="job_type">Job Type:</label>
+      <input type="text" name="type_of_jobs" id="job_type" required>
+      <button type="submit" name="add_type">Add Job Type</button>
+  </form>
+</div>
+
+{% endblock %}

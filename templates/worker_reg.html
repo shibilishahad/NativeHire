@@ -98,9 +98,16 @@
         <h2>Worker Registration</h2>
         <form method="POST" action="{% url 'worker_reg' %}" enctype="multipart/form-data">
             {% csrf_token %}
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
             <div class="form-group">
                 <label for="user_type">User Type</label>
-                <input type="hidden" id="user_type" name="user_type" value='worker'>WORKER
+                <input type="hidden" id="user_type" name="user_type" value="worker">WORKER
             </div>
             <div class="form-group">
                 <label for="first_name">First Name</label>
@@ -139,52 +146,38 @@
                 <input type="number" id="experience" name="experience" class="form-control" required>
             </div>
             <div class="form-group">
-                <label for="job_type">Job Type</label>
-                <select id="job_type" name="job_type" class="form-control">
-                    <option value="Painter">Painter</option>
-                    <option value="Construction">Construction</option>
-                    <option value="Carpenter">Carpenter</option>
-                    <option value="Electricion">Electricion</option>
-                    <option value="Plumber">Plumber</option>
-                </select>
+                <label for="job_types">Job Type:</label>
+                <select id="job_types" name="job_type">
+                    <option value="" selected disabled>Select a job type</option>
+                    {% for job_type in job_types %}
+                        <option value="{{ job_type.id }}">{{ job_type.type_of_jobs }}</option>
+                    {% endfor %}
+                </select><br>
             </div>
             <div class="form-group checkbox-group">
                 <div class="checkbox-row">
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="monday" name="monday" class="custom-checkbox">
-                        Monday
+                    <br><h4>Available days </h4>
+                    <label for="monday">Monday</label>
+                        <input type="checkbox" name="monday" {% if worker.availability.Monday %}checked{% endif %}>
                     </label>
             
-                    <label class="checkbox-label" for="tuesday">
-                        <input type="checkbox" id="tuesday" name="tuesday" class="custom-checkbox">
-                        Tuesday
+                    <label for="monday">Tuesday</label>
+                        <input type="checkbox" name="tuesday" {% if worker.availability.Tuesday %}checked{% endif %}>
                     </label>
-            
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="wednesday" name="wednesday" class="custom-checkbox">
-                        Wednesday
+                    <label for="monday">Wednesday</label>
+                        <input type="checkbox" name="wednesday" {% if worker.availability.Wednesday %}checked{% endif %}>
                     </label>
-                </div>
-            
-                <div class="checkbox-row">
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="thursday" name="thursday" class="custom-checkbox">
-                        Thursday
+                    <label for="monday">Thursday</label>
+                        <input type="checkbox" name="thursday" {% if worker.availability.Thursday %}checked{% endif %}>
                     </label>
-            
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="friday" name="friday" class="custom-checkbox">
-                        Friday
+                    <label for="monday">Friday</label>
+                        <input type="checkbox" name="friday" {% if worker.availability.Friday %}checked{% endif %}>
                     </label>
-            
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="saturday" name="saturday" class="custom-checkbox">
-                        Saturday
+                    <label for="monday">Saturday</label>
+                        <input type="checkbox" name="saturday" {% if worker.availability.Saturday %}checked{% endif %}>
                     </label>
-            
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="sunday" name="sunday" class="custom-checkbox">
-                        Sunday
+                    <label for="monday">Sunday</label>
+                        <input type="checkbox" name="sunday" {% if worker.availability.Sunday %}checked{% endif %}>
                     </label>
                 </div>
             </div>            
