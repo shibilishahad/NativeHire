@@ -8,7 +8,7 @@
     <title>NativeHire - Your Job Connection</title>
     <style>
         body {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{% static 'images/background.jpg' %}');
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{% static 'images/background2.jpg' %}');
             background-size: cover;
             color: white;
             font-family: Arial, sans-serif;
@@ -79,11 +79,13 @@
         .app-title {
             font-size: 2.5rem;
             margin: 20px 0;
+            color: white;
         }
 
         .app-description {
             font-size: 1rem;
             margin-bottom: 2rem;
+            color: white;
         }
 
         .cta-buttons {
@@ -92,26 +94,32 @@
             gap: 20px;
         }
 
-        .cta-button {
+        {% comment %} .cta-button {
             padding: 15px 20px; 
             border-radius: 5px;
             font-size: 1rem;
             text-align: center;
             text-decoration: none;
             color: white;
+            background-color: transparent; /* Remove background color */
+            border: 2px solid white; /* Add a white border */
             transition: background-color 0.3s ease;
-        }
+        } {% endcomment %}
 
         .cta-button.employer {
             background: #FF5733;
         }
-
+    
         .cta-button.worker {
             background: #338DFF;
         }
-
-        .cta-button:hover {
-            background: #333;
+    
+        .cta-button.employer:hover {
+            background: #FF5733;
+        }
+    
+        .cta-button.worker:hover {
+            background: #338DFF; 
         }
 
         .benefits {
@@ -136,6 +144,7 @@
         .benefits p {
             font-size: 1rem;
             margin-top: 10px;
+            color: white;
         }
 
         @media (max-width: 768px) {
@@ -165,6 +174,7 @@
             .benefits h5,
             .benefits p {
                 font-size: 1rem;
+                color: white; /* Set text color to white */
             }
         }
     </style>
@@ -182,40 +192,55 @@
             <div class="cta-buttons">
                 <a href="{% url 'user_login' %}" class="cta-button employer">Get Started</a>
             </div>
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <a href="#benefits" class="scrollto wow fadeInUp delay-5s" style="text-decoration: none;">
-                        <p class="center-text">
-                            <span style="color: white;">SEE MORE</span><br>
-                            <span style="color: white;"><i class="fa fa-angle-down"></i></span>
-                        </p>
-                    </a>
-                </div>
+        </div>
+    </div>
+    <div class="container benefits">
+        <h3>For Workers</h3>
+        <div class="row">
+            <div class="col-md-12">
+                <h5>Find Job Opportunities Easily</h5>
+                <p>The app provides workers with a convenient platform to search and apply for temporary job opportunities in various industries. Workers can easily find job listings that match their skills and availability.</p>
+            </div>
+            <div class="col-md-12">
+                <h5>Showcase Skills and Availability</h5>
+                <p>Workers can create profiles that showcase their skills, experience, and availability. They can update their availability in real-time, making it easier for employers to find suitable candidates for their temporary job needs.</p>
+            </div>
+            <div class="col-md-12">
+                <h5>Flexible Working</h5>
+                <p>NativeHire offers workers the flexibility to choose the jobs that suit their schedule and preferences. Workers can take on jobs that align with their expertise and desired work-life balance.</p>
+            </div>
+            <div class="col-md-12">
+                <h5>Build a Reputation</h5>
+                <p>Workers can receive ratings and reviews from employers after completing jobs. Positive reviews can help workers build a good reputation and increase their chances of getting hired for future opportunities.</p>
+            </div>
+        </div>
+        <h3>For Employers</h3>
+        <div class="row">
+            <div class="col-md-12">
+                <h5>Efficient Hiring Process</h5>
+                <p>NativeHire streamlines the hiring process for employers, enabling them to find skilled workers quickly and easily. Employers can post job listings, specify their requirements, and connect with workers who match their needs.</p>
+            </div>
+            <div class="col-md-12">
+                <h5>Access to a Skilled Workforce</h5>
+                <p>Employers have access to a diverse pool of skilled workers across various industries, giving them the flexibility to find the right talent for their short-term projects. They can review worker profiles, including skills, experience, and ratings, to make informed hiring decisions.</p>
+            </div>
+            <div class="col-md-12">
+                <h5>Real-time Availability Information</h5>
+                <p>Employers can view workers' real-time availability, helping them make immediate hiring decisions based on their project timelines. This feature ensures that employers can find workers who can start working quickly.</p>
+            </div>
+            <div class="col-md-12">
+                <h5>Cost-Effective Solution</h5>
+                <p>NativeHire offers a cost-effective solution for employers who require temporary workers. Employers can post job listings, review worker profiles, and hire the right talent without the overhead of a long-term employment contract.</p>
+            </div>
+            <div class="col-md-12">
+                <h5>Rating and Review System</h5>
+                <p>Employers can rate and review workers after a job is completed, helping build a transparent and trustworthy community. This system assists employers in making informed hiring decisions and recognizing top-performing workers.</p>
             </div>
         </div>
     </div>
-    <div class="container benefits" id="benefits">
-        <h3>For Workers</h3>
-        <h5>Find Job Opportunities Easily</h5>
-        <p>The app provides workers with a convenient platform to search and apply for temporary job opportunities in various industries. Workers can easily find job listings that match their skills and availability.</p>
-        <h5>Showcase Skills and Availability</h5>
-        <p>Workers can create profiles that showcase their skills, experience, and availability. They can update their availability in real-time, making it easier for employers to find suitable candidates for their temporary job needs.</p>
-        <h5>Flexible Working</h5>
-        <p>NativeHire offers workers the flexibility to choose the jobs that suit their schedule and preferences. Workers can take on jobs that align with their expertise and desired work-life balance.</p>
-        <h5>Build a Reputation</h5>
-        <p>Workers can receive ratings and reviews from employers after completing jobs. Positive reviews can help workers build a good reputation and increase their chances of getting hired for future opportunities.</p>
-        <h3>For Employers</h3>
-        <h5>Efficient Hiring Process</h5>
-        <p>NativeHire streamlines the hiring process for employers, enabling them to find skilled workers quickly and easily. Employers can post job listings, specify their requirements, and connect with workers who match their needs.</p>
-        <h5>Access to a Skilled Workforce</h5>
-        <p>Employers have access to a diverse pool of skilled workers across various industries, giving them the flexibility to find the right talent for their short-term projects. They can review worker profiles, including skills, experience, and ratings, to make informed hiring decisions.</p>
-        <h5>Real-time Availability Information</h5>
-        <p>Employers can view workers' real-time availability, helping them make immediate hiring decisions based on their project timelines. This feature ensures that employers can find workers who can start working quickly.</p>
-        <h5>Cost-Effective Solution</h5>
-        <p>NativeHire offers a cost-effective solution for employers who require temporary workers. Employers can post job listings, review worker profiles, and hire the right talent without the overhead of a long-term employment contract.</p>
-        <h5>Rating and Review System</h5>
-        <p>Employers can rate and review workers after a job is completed, helping build a transparent and trustworthy community. This system assists employers in making informed hiring decisions and recognizing top-performing workers.</p>
-    </div>
     <script src="https://kit.fontawesome.com/99c8e7f304.js" crossorigin="anonymous"></script>
+    {% block body %}
+    {% endblock %}
+    {% include "footer.html" %}
 </body>
 </html>

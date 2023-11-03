@@ -1,0 +1,132 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <style>
+        body {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{% static 'images/background2.jpg' %}');
+            background-size: cover;
+            color: #333;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .about-section {
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 10px;
+            padding: 30px;
+            margin-top: 20px;
+            text-align: left;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .about-section h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .about-description {
+            font-size: 1.1rem;
+            color: #555;
+            margin: 10px 0;
+        }
+
+        .logo-box {
+            background-color: #fff;
+            border-radius: 50%;
+            padding: 20px;
+            margin: 0 auto 20px;
+        }
+
+        .logo {
+            display: block;
+            margin: 0 auto;
+            max-width: 200px;
+            height: auto;
+        }
+
+        .developer-section {
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+            padding: 30px;
+            margin-top: 20px;
+            text-align: center;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .developer-section h2 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .developer-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .developer-name {
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .developer-image {
+            display: block;
+            margin: 0 auto;
+            max-width: 300px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="about-section">
+            <div class="logo-box">
+                <img src="{% static 'images/logo-no-background.png' %}" alt="NativeHire Logo" class="logo">
+            </div>
+            <h1 class="mt-4 mb-4">About NativeHire</h1>
+            <p class="about-description">
+                Welcome to NativeHire, your trusted platform for connecting skilled workers with employers seeking temporary job opportunities.
+            </p>
+            <p class="about-description">
+                Our mission is to simplify the job search and hiring process, making it easy for workers to find suitable job opportunities and for employers to discover the right talent for their short-term projects.
+            </p>
+            <p class="about-description">
+                NativeHire offers a user-friendly interface that allows workers to showcase their skills, experience, and availability. Employers can post job listings, specify their requirements, and connect with workers who meet their needs. Our platform uses algorithms to enhance matching, ensuring a seamless and efficient experience for both workers and employers.
+            </p>
+            <p class="about-description">
+                Whether you're a worker looking for flexible job opportunities or an employer in need of skilled temporary workers, NativeHire is here to bridge the gap and simplify the process.
+            </p>
+        </div>
+    </div>
+
+    <div class="container developer-section">
+        <h2>Meet the Developer Team</h2>
+        <div class="developer-info">
+            <img src="{% static 'images/IMG_3131.JPG' %}" alt="Developer" class="developer-image">
+            <p class="developer-name">MUHAMMED SHADI (Backend Developer)</p>
+        </div>
+    </div>
+</body>
+{% include "footer.html" %}
+</html>

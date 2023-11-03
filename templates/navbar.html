@@ -1,32 +1,35 @@
 {% load static %}
+<script src="https://kit.fontawesome.com/99c8e7f304.js" crossorigin="anonymous"></script>
 <nav class="navbar navbar-expand-lg bg-primary fixed-top" data-bs-theme="dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Worker Home</a>
+    <a class="navbar-brand" style="margin-left:1rem;" href="#">Worker Home</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarColor01">
       <ul class="navbar-nav ms-auto" style="margin-right:5rem;">
         <li class="nav-item">
-          <a class="nav-link active" href="#">Home
-            <span class="visually-hidden">(current)</span>
+          <a class="nav-link active" href="{% url 'worker_home' %}">Home</a>
+        </li>
+        <li class="nav-item dropdown" style="padding-left:0.5rem;">
+          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-bell fa-beat"></i> Notifications
           </a>
+          <div class="dropdown-menu notifications-dropdown">
+            <ul class="list-group">
+              {% for notification in worker.notification_set.all %}
+                {% if notification.hiring.status == 'Pending' %}
+                  <li class="list-group-item notification-item">{{ notification.messages }}</li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
         </li>
-        {% comment %} <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">About</a>
-        </li> {% endcomment %}
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Profile</a>
+        <!-- Other menu items -->
+        <li class="nav-item dropdown" style="padding-left:0.5rem;">
+          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role of="button" aria-haspopup="true" aria-expanded="false">Profile</a>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Edit pic</a>
-            <a class="dropdown-item" href="#">Edit Password</a>
-            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{% url 'password_change' %}">Password change</a>
             <a class="dropdown-item" href="{% url 'logout_worker' %}">Logout</a>
           </div>
         </li>

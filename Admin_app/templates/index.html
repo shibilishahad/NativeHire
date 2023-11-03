@@ -182,36 +182,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </a>
                 </li>
                 
-                <li class="sub-menu">
-                    <a href="javascript:;">
+                <li>
+                    <a href="{% url 'Admin_app:admin_emp' %}">
                         <i class="fa fa-book"></i>
                         <span>Employers</span>
                     </a>
-                    <ul class="sub">
-						        <li><a href="{% url 'Admin_app:admin_emp' %}">View Employers</a></li>
-						        <li><a href="{% url 'Admin_app:delete_employer' %}">Delete Employers</a></li>
-
-                    </ul>
                 </li>
-                <li class="sub-menu">
-                    <a href="javascript:;">
+                <li>
+                    <a href="{% url 'Admin_app:admin_worker' %}">
                         <i class="fa fa-book"></i>
                         <span>Workers</span>
                     </a>
-                    <ul class="sub">
-						        <li><a href="{% url 'Admin_app:admin_worker' %}">View Workers</a></li>
-						        <li><a href="{% url 'Admin_app:delete_worker' %}">Delete Workers</a></li>
-                    </ul>
                 </li>
-                <li class="sub-menu">
-                    <a href="javascript:;">
+                <li>
+                    <a href="{% url 'Admin_app:TypeView' %}">
                         <i class="fa fa-book"></i>
                         <span>Job Types</span>
                     </a>
-                    <ul class="sub">
-						        <li><a href="{% url 'Admin_app:TypeView' %}">View/Delete Job Types</a></li>
-						        {% comment %} <li><a href="{% url 'Admin_app:delete_employer' user_id=worker.user_id %}">Delete Workers</a></li> {% endcomment %}
-                    </ul>
                 </li>
                 {% comment %} <li>
                     <a href="fontawesome.html">

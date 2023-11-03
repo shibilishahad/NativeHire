@@ -5,8 +5,19 @@ from django.contrib.auth.models import User, auth
 from NativeApp.models import Customer, Employer, Hiring, Worker
 from django.urls import reverse
 
+
+
+def if_login(request,user):
+    if request.user.is_authenticated:
+        return None
+    else:
+        return redirect('user_login')
+    
+
 class AdminHome(View):
     def get(self, request):
+        if if_login(request,request.user):
+            return if_login(request, request.user)
         total = Hiring.objects.filter(status='Accepted')
         total1 = Hiring.objects.filter(status='Pending')
         worker = Worker.objects.all()
@@ -15,16 +26,22 @@ class AdminHome(View):
 
 class AdminEmp(View):
     def get(self, request):
+        if if_login(request,request.user):
+            return if_login(request, request.user)
         emp = Customer.objects.all()
         return render(request, 'admin_emp.html', {'emp': emp})
 
 class AdminWorker(View):
     def get(self, request):
+        if if_login(request,request.user):
+            return if_login(request, request.user)
         emp = Customer.objects.all()
         return render(request, 'admin_worker.html', {'emp': emp})
 
 class Type(View):
     def get(self, request):
+        if if_login(request,request.user):
+            return if_login(request, request.user)
         job_types = TypeOfJobs.objects.all()
         return render(request, 'admin_job_types.html', {'job_types': job_types})
 
@@ -36,46 +53,59 @@ class Type(View):
         elif 'delete_type' in request.POST:
             type_id = request.POST.get('type_id')
             if type_id:
-                TypeOfJobs.objects.filter(pk=type_id).delete()
+                TypeOfJobs.objects.filter(id=type_id).delete()
         return redirect(reverse('Admin_app:TypeView'))
 
 class DeleteEmployer(View):
     def get(self, request):
+        if if_login(request,request.user):
+            return if_login(request, request.user)
         employer = Employer.objects.all()
         return render(request, 'delete_employer.html', {'employer': employer})
 
 class DeleteEmp(View):
     def post(self, request, user_id):
+        if if_login(request,request.user):
+            return if_login(request, request.user)
         employer = Employer.objects.filter(user=user_id).first()
         employer1 = Customer.objects.filter(user=user_id).first()
         employer2 = User.objects.filter(id=user_id).first()
         employer2.delete()
         employer.delete()
         employer1.delete()
-        return redirect(reverse('Admin_app:admin_home'))
+        return redirect(reverse('Admin_app:admin_emp'))
 
 class DeleteWorker(View):
     def get(self, request):
+        if if_login(request,request.user):
+            return if_login(request, request.user)
         worker = Worker.objects.all()
         return render(request, 'delete_worker.html', {'worker': worker})
 
 class DeleteWork(View):
     def post(self, request, user_id):
+        if if_login(request,request.user):
+            return if_login(request, request.user)
         worker = Worker.objects.filter(user=user_id).first()
         worker1 = Customer.objects.filter(user=user_id).first()
         worker2 = User.objects.filter(id=user_id).first()
         worker.delete()
         worker1.delete()
         worker2.delete()
-        return redirect(reverse('Admin_app:admin_home'))
+        return redirect(reverse('Admin_app:admin_worker'))
 
 class LogoutAdmin(View):
     def get(self, request):
+        if if_login(request,request.user):
+            return if_login(request, request.user)
         auth.logout(request)
-        return redirect('user_login')
+        request.session.flush()
+        return redirect('home')
 
 class Notifications(View):
     def get(self, request, worker_id):
+        if if_login(request,request.user):
+            return if_login(request, request.user)
         employer = Employer.objects.all()
         customer = Customer.objects.all()
         worker = get_object_or_404(Worker, id=worker_id)

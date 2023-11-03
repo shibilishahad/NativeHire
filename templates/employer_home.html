@@ -3,44 +3,99 @@
 
 {% block body %}
 <div class="container mt-4">
-    <h1 style="color: white;"><b>Welcome, {{ employer.user.username }}<b></h1>
-    <p style="color: white;">Your worker dashboard and available workers:</p>
+    <h1 class="text" style="color: white;font-weight:20rem;"><b>Welcome, {{ employer.user.username }}</b></h1>
+    <p class="text" style="color: white;font-weight:20rem;">Your employer dashboard and available workers:</p>
     <div class="row">
-        {% if workers %}
-            {% for i in workers %}
-                {% cycle '' '' '' '' as row_divider %}
-                {% if forloop.counter0|divisibleby:4 %}
-                    </div><div class="row">
-                {% endif %}
-                <div class="col-md-3">
-                    <div class="card mb-4">
-                        {% for j in customers %}
-                        {% if i.user.id == j.user.id %}
-                        <img src="{{ j.profile_pic.url }}" class="card-img-top" alt="Worker Image" style="height:20rem;width:16.3rem;">
-                        {% endif %}
-                        {% endfor %}
+        <div class="col-md-4">
+            <div class="card mb-4" style="background-color: rgba(255, 255, 255, 0.7);">
+                <div class="card-body">
+                    <h2 class="card-title">Manage Your Profile</h2>
+                    <p class="card-text">Hire workers, update your profile, and more.</p>
+                    <h5 class="card-title">About Me</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Username:</strong> {{ employer.user.username }}</p>
+                                <p><strong>First Name:</strong> {{ employer.user.first_name }}</p>
+                                <p><strong>Location:</strong> {{ customer.location }}</p>
+                                <img src="{{ customer.profile_pic.url }}" alt="Current Profile Picture" class="img-thumbnail preview-image">
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Email:</strong> {{ employer.user.email }}</p>
+                                <p><strong>Last Name:</strong> {{ employer.user.last_name }}</p>
+                                <p><strong>Phone Number:</strong> +91 {{ customer.phone_no }}</p>
 
+                            </div>
+                        </div>
+                    <a href="{% url 'employer_update' update_id=employer.user.id %}" class="btn btn-primary btn-block" style="margin-left:5rem;">Update Profile</a>
+                </div>
+            </div>
+        </div>
+
+        {% if workers %}
+            {% for worker in workers %}
+                <div class="col-md-3">
+                    <div class="card mb-4" style="background-color: rgba(255, 255, 255, 0.7);">
+                        {% for customer in customers %}
+                            {% if worker.user.id == customer.user.id %}
+                            {% if customer.profile_pic %}
+                            <img src="{{ customer.profile_pic.url }}" class="card-img-top" alt="Worker Image" style="height: 17rem; width: 16.3rem;">
+                        {% endif %}
+                            {% endif %}
+                        {% endfor %}
                         <div class="card-body">
-                            <h5 class="card-title">{{ i.user.username }}</h5>
-                            <p class="card-text">{{ i.type.job_type }}</p>
-                            <p class="card-text">{{ i.wage }}</p>
-                            <a href="{% url 'employer_hire' i.id %}" class="btn btn-primary btn-sm">Hire</a>
+                            <h5 class="card-title">{{ worker.user.username }}</h5>
+                            <p class="card-text">{{ worker.job_types }}</p>
+                            <p class="card-text">Wage: ₹{{ worker.wage }}</p>
+                            {% for customer in customers %}
+                                {% if worker.user.id == customer.user.id %}
+                                <p class="card-text">Location: {{ customer.location }}</p>
+                                <p class="card-text">Experience: {{ worker.experience }}</p>
+
+                                {% endif %}
+                            {% endfor %}
+
+                            <a href="{% url 'employer_hire' worker.id %}" class="btn btn-primary btn-sm">Hire</a>
                         </div>
                     </div>
                 </div>
             {% endfor %}
         {% else %}
-            <p style="color: white;">No workers are available.</p>
+            <div class="col-md-12">
+                <p class="text-danger">No workers are available.</p>
+            </div>
         {% endif %}
     </div>
 </div>
 
-<div class="container-fluid bg-primary text-white text-center py-1">
-    <h4>{{ employer.user.username }} Dashboard</h4>
-    <p>Current Hired Workers: 
-        
-    </p>
-</div>
-</body>
-</html>
+<style>
+    .card {
+        border: 1px solid #000;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        transition: transform 0.2s;
+    }
+
+    .card:hover {
+        transform: scale(1.03);
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .card-text {
+        font-size: 1.2rem;
+        color: #000;
+    }
+
+    .btn {
+        border-radius: 5px;
+    }
+
+    .text-danger {
+        color: #FF6347;
+    }
+</style>
 {% endblock %}

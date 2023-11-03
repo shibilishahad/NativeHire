@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from Admin_app.models import TypeOfJobs
 
+
 class Customer(models.Model):
     USER_TYPES = (
         ('employer', 'employer'),
@@ -40,8 +41,8 @@ class Worker(models.Model):
     # type = models.ForeignKey(Dummy, on_delete=models.CASCADE, null=True)
     hiring_requests = models.ManyToManyField('Hiring', related_name='workers')
     availability = models.JSONField(default=dict)
-    wage = models.IntegerField(null=True)
-    experience = models.IntegerField(null=True)
+    wage = models.FloatField(null=True)
+    experience = models.FloatField(null=True)
     # jobtype = models.JSONField()
     # type_of_jobs = models.ForeignKey(TypeOfJobs, on_delete=models.CASCADE)
     job_types = models.ForeignKey(TypeOfJobs, on_delete=models.CASCADE)

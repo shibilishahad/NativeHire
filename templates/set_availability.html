@@ -9,31 +9,31 @@
                     <form method="post" action="{% url 'set_availability' %}">
                         {% csrf_token %}
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" name="availability[Monday]" {% if worker.availability.Monday %}checked{% endif %}>
+                            <input type="checkbox" class="form-check-input" name="availability[Monday]" {% if availability.Monday %}checked{% endif %}>
                             <label class="form-check-label" for="monday">Monday</label>
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" name="availability[Tuesday]" {% if worker.availability.Tuesday %}checked{% endif %}>
+                            <input type="checkbox" class="form-check-input" name="availability[Tuesday]" {% if availability.Tuesday %}checked{% endif %}>
                             <label class="form-check-label" for="tuesday">Tuesday</label>
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" name="availability[Wednesday]" {% if worker.availability.Wednesday %}checked{% endif %}>
+                            <input type="checkbox" class="form-check-input" name="availability[Wednesday]" {% if availability.Wednesday %}checked{% endif %}>
                             <label class="form-check-label" for="wednesday">Wednesday</label>
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" name="availability[Thursday]" {% if worker.availability.Thursday %}checked{% endif %}>
+                            <input type="checkbox" class="form-check-input" name="availability[Thursday]" {% if availability.Thursday %}checked{% endif %}>
                             <label class="form-check-label" for="thursday">Thursday</label>
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" name="availability[Friday]" {% if worker.availability.Friday %}checked{% endif %}>
+                            <input type="checkbox" class="form-check-input" name="availability[Friday]" {% if availability.Friday %}checked{% endif %}>
                             <label class="form-check-label" for="friday">Friday</label>
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" name="availability[Saturday]" {% if worker.availability.Saturday %}checked{% endif %}>
+                            <input type="checkbox" class="form-check-input" name="availability[Saturday]" {% if availability.Saturday %}checked{% endif %}>
                             <label class="form-check-label" for="saturday">Saturday</label>
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" name="availability[Sunday]" {% if worker.availability.Sunday %}checked{% endif %}>
+                            <input type="checkbox" class="form-check-input" name="availability[Sunday]" {% if availability.Sunday %}checked{% endif %}>
                             <label class="form-check-label" for="sunday">Sunday</label>
                         </div>
                         <button type="submit" class="btn btn-primary mt-3">Save Availability</button>

@@ -2,14 +2,31 @@
 {% block body %}
 <style>
     body {
+        background-color: #242424;
         color: white;
     }
 
     .negotiate-button {
-        color: black; 
+        background-color: #007BFF; 
+        color: white;
     }
-    .modal{
+
+    .modal {
         color: black;
+    }
+
+    .modal-content {
+        background-color: #333;
+        color: white; 
+    }
+    
+    /* Add spacing between details */
+    .card-text {
+        margin-bottom: 10px;
+    }
+    
+    .availability-section {
+        margin-top: 20px;
     }
 </style>
 <div class="container mt-4">
@@ -24,7 +41,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="card mb-4">
+            <div class="card mb-4"style="background-color: rgba(255, 255, 255, 0.7);">
                 <div class="card-body">
                     {% for j in customer %}
                     {% if worker.user.id == j.user.id %}
@@ -32,13 +49,18 @@
                     <h2 class="card-title text-center mb-3">{{ worker.user.first_name }} {{ worker.user.last_name }}</h2>
                     <p class="card-text h5">Phone Number: (+91) {{ j.phone_no }}</p>
                     <p class="card-text h6">Location: {{ j.location }}</p>
-                    <p class="card-text h6">User Type: {{ j.user_type }}</p>
-                    <p class="card-text h5">Wage: ${{ worker.wage }}</p>
+                    {% comment %} <p class="card-text h6">User Type: {{ j.user_type }}</p> {% endcomment %}
+                    <p class="card-text h5">Wage: ₹{{ worker.wage }}</p>
                     <div class="availability-section">
                         <h3>Availability</h3>
                         <p class="lead">
-                            <b>Available on:</b>
-                            <li>{{worker.availability}}</li><br>
+                            <b>Unavailable on:
+                                {% for day, available in worker.availability.items %}
+                                    {% if not available %}
+                                        {{ day }},
+                                    {% endif %}
+                                {% endfor %}
+                            </b>
                         </p>
                     </div>
                     {% endif %}
@@ -64,10 +86,6 @@
                 <form method="post" action="{% url 'negotiate' worker.id %}">
                     {% csrf_token %}
                     <div class="form-group">
-                        <label for="wage" class="h5">Wage:</label>
-                        <input type="text" class="form-control" id="wage" name="wage" required>
-                    </div>
-                    <div class="form-group">
                         <label for="start_date" class="h5">Start Date:</label>
                         <input type="date" class="form-control" id="start_date" name="start_date" required>
                     </div>
@@ -75,16 +93,81 @@
                         <label for="end_date" class="h5">End Date:</label>
                         <input type="date" class="form-control" id="end_date" name="end_date" required>
                     </div>
+                    <div class="form-group">
+                        <label for="wage" class="h5">Wage:</label>
+                        <input type="text" class="form-control" id="wage" name="wage" placeholder="Wage" value="{{worker.wage}}" required disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="total_wage" class="h5">Total Wage:</label>
+                        <input type="text" class="form-control" id="total_wage" name="total_wage" required>
+                    </div>
+                    <script>
+                        var currentDate = new Date().toISOString().slice(0, 10);
+                        var startDateInput = document.getElementById('start_date');
+                        var endDateInput = document.getElementById('end_date');
+                        var wageInput = document.getElementById('wage');
+                        var totalWageElement = document.getElementById('total_wage');
+                        var unavailableDays = []; // Initialize an array to store unavailable days
+                        
+                        startDateInput.setAttribute('min', currentDate);
+                    
+                        startDateInput.addEventListener('change', function () {
+                            endDateInput.min = startDateInput.value;
+                            calculateTotalWage();
+                        });
+                    
+                        endDateInput.addEventListener('change', calculateTotalWage);
+                    
+                        wageInput.addEventListener('input', calculateTotalWage);
+                    
+                        // Function to update the list of unavailable days based on worker.availability.items
+                        function updateUnavailableDays() {
+                            unavailableDays = [];
+                            {% for day, available in worker.availability.items %}
+                                {% if not available %}
+                                    unavailableDays.push('{{ day }}');
+                                {% endif %}
+                            {% endfor %}
+                        }
+                        
+                        function calculateTotalWage() {
+                            var startDate = new Date(startDateInput.value);
+                            var endDate = new Date(endDateInput.value);
+                            var wage = parseFloat(wageInput.value) || 0; // Use parseFloat to ensure wage is treated as a number
+                            var totalWage = 0;
+                    
+                            // Update the list of unavailable days
+                            updateUnavailableDays();
+                            
+                            var currentDay = startDate;
+                            while (currentDay <= endDate) {
+                                // Check if the current day is unavailable
+                                var dayOfWeek = currentDay.getDay(); // 0 (Sunday) to 6 (Saturday)
+                                var dayName = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][dayOfWeek];
+                    
+                                if (!unavailableDays.includes(dayName)) {
+                                    totalWage += wage;
+                                }
+                    
+                                // Move to the next day
+                                currentDay.setDate(currentDay.getDate() + 1);
+                            }
+                    
+                            totalWageElement.value = totalWage.toFixed(2); // Set the value of the input field
+                        }
+                    </script>
+                    
+                    
                     
                     <script>
                         var currentDate = new Date().toISOString().slice(0, 10);
                         var startDateInput = document.getElementById('start_date');
                         var endDateInput = document.getElementById('end_date');
                     
-                        startDateInput.setAttribute('min', currentDate); // Set minimum date for Start Date
+                        startDateInput.setAttribute('min', currentDate); 
                     
                         startDateInput.addEventListener('change', function () {
-                            endDateInput.min = startDateInput.value; // Update minimum date for End Date based on Start Date
+                            endDateInput.min = startDateInput.value; 
                         });
                     </script>
                     <div class="text-center">

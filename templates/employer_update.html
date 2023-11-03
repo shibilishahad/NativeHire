@@ -1,0 +1,120 @@
+{% extends "employer_base.html" %}
+{% load static %}
+{% block body %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <style>
+        .container {
+            max-width: 600px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+        }
+        .btn-submit {
+            width: 100%;
+        }
+        .info-box {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .preview-image {
+            max-width: 200px;
+            max-height: 200px;
+        }
+        .image-container {
+            display: flex;
+            align-items: center;
+        }
+        .image-box {
+            flex: 1;
+            text-align: center;
+            padding: 20px;
+        }
+        h5 {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center">Update Employer Information</h2>
+
+        <form method="post" action="{% url 'employer_update' update_id=user.id %}" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="location">Location:</label>
+                <input type="text" name="location" class="form-control" value="{{ customer.location }}">
+            </div>
+
+            <div class="form-group">
+                <label for="phone_no">Phone Number:</label>
+                <input type="text" name="phone_no" class="form-control" value="{{ customer.phone_no }}">
+            </div>
+
+            <div class="form-group">
+                <label for="first_name">First Name:</label>
+                <input type="text" name="first_name" class="form-control" placeholder="First Name" pattern="[A-Za-z ]+" title="First name must be in english alphabets" value="{{ user.first_name }}">
+            </div>
+
+            <div class="form-group">
+                <label for="last_name">Last Name:</label>
+                <input type="text" name="last_name" class="form-control" placeholder="Last Name" pattern="[A-Za-z ]+" title="First name must be in english alphabets" value="{{ user.last_name }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="text" name="email" class="form-control" placeholder="Email" pattern="^[^@]+@[^@]+\.(com|in)$" value="{{ user.email }}">
+            </div>
+
+            <div class="info-box">
+                <h4 class="text-center">Profile Picture</h4>
+            </div>
+            <div class="image-container">
+                <div class="image-box">
+                    <h5>Current Profile Picture</h5>
+                    <img src="{{ customer.profile_pic.url }}" alt="Current Profile Picture" class="img-thumbnail preview-image">
+                </div>
+                <div class="image-box">
+                    <h5>New Profile Picture</h5>
+                    <input type="file" name="profile_pic" accept="image/*" class="form-control" id="profilePicInput">
+                    <img id="imagePreview" class="img-thumbnail preview-image" style="display: none;">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-submit">Update Information</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        const profilePicInput = document.getElementById('profilePicInput');
+        const imagePreview = document.getElementById('imagePreview');
+
+        profilePicInput.addEventListener('change', function () {
+            const file = profilePicInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>
+{% endblock %}

@@ -2,7 +2,7 @@
 {% load static %} 
 {% block body %}
 
-<div style="background-color:white; padding: 20px;">
+<div style="background-color:white; padding: 20px;overflow: auto;">
     <table style="border-collapse: collapse; width: 100%;">
         <thead>
             <tr style="background-color: #007BFF; color: white;">
@@ -14,9 +14,9 @@
                 <th style="border: 1px solid #ccc; padding: 8px;">Email</th>
                 <th style="border: 1px solid #ccc; padding: 8px;">Created Date</th>
                 <th style="border: 1px solid #ccc; padding: 8px;">Username</th>
-                <th style="border: 1px solid #ccc; padding: 8px;">User Type</th>
+                {% comment %} <th style="border: 1px solid #ccc; padding: 8px;">User Type</th> {% endcomment %}
                 <th style="border: 1px solid #ccc; padding: 8px;">Available days</th>
-
+                <th style="border: 1px solid #ccc; padding: 8px;">Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -31,8 +31,15 @@
                 <td style="border: 1px solid #ccc; padding: 8px;">{{ i.user.email }}</td>
                 <td style="border: 1px solid #ccc; padding: 8px;">{{ i.user.date_joined }}</td>
                 <td style="border: 1px solid #ccc; padding: 8px;">{{ i.user.username }}</td>
-                <td style="border: 1px solid #ccc; padding: 8px;">{{ i.user_type }}</td>
+                {% comment %} <td style="border: 1px solid #ccc; padding: 8px;">{{ i.user_type }}</td> {% endcomment %}
                 <td style="border: 1px solid #ccc; padding: 8px;">{{ i.user.wage }}</td>
+                <td>
+                    <form method="POST" action="{% url 'Admin_app:delete_work' i.user.id %}">
+                      {% csrf_token %}
+                      <button style="border: 1px solid #ccc; padding: 8px;" type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                  </td>
+                
             </tr>
             {% endif %}
             {% endfor %}

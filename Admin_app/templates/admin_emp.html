@@ -20,7 +20,8 @@
                     <th>Email</th>
                     <th>Created Date</th>
                     <th>Username</th>
-                    <th>User Type</th>
+                    {% comment %} <th>User Type</th> {% endcomment %}
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -35,7 +36,13 @@
                     <td>{{ i.user.email }}</td>
                     <td>{{ i.user.date_joined }}</td>
                     <td>{{ i.user.username }}</td>
-                    <td>{{ i.user_type }}</td>
+                    {% comment %} <td>{{ i.user_type }}</td> {% endcomment %}
+                    <td>
+                        <form method="POST" action="{% url 'Admin_app:delete_emp' i.user.id %}">
+                          {% csrf_token %}
+                          <button style="border: 1px solid #ccc; padding: 8px;" type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                      </td>
                 </tr>
                 {% endif %}
                 {% endfor %}

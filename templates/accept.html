@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hiring Accepted</title>
+</head>
+<body>
+    <h1>Hiring accepted by {{ worker.user.username }}</h1>
+    <p>Dear {{ employer.user.username }},</p>
+    <p>{{ worker.user.username }} has accepted your hiring request. Job duration is from {{ hiring.start_date }} to {{ hiring.end_date }}.</p>
+    <p>Thank you for choosing our service!</p>
+    <img src="{% static 'images/logo-no-background.png' %}" alt="Your Logo">
+</body>
+</html>

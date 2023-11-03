@@ -86,13 +86,13 @@
 </div>
 
 <div class="job-type-form">
-  <h2>Add New Job Type</h2>
-  <form method="post" action="{% url 'Admin_app:TypeView' %}">
-      {% csrf_token %}
-      <label for="job_type">Job Type:</label>
-      <input type="text" name="type_of_jobs" id="job_type" required>
-      <button type="submit" name="add_type">Add Job Type</button>
-  </form>
+    <h2>Add New Job Type</h2>
+    <form method="post" action="{% url 'Admin_app:TypeView' %}">
+        {% csrf_token %}
+        <label for="job_type">Job Type:</label>
+        <input type="text" name="type_of_jobs" id="job_type" required>
+        <button type="submit" name="add_type">Add Job Type</button>
+    </form>
 </div>
 
 {% endblock %}
