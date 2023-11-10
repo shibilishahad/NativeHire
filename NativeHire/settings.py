@@ -40,7 +40,12 @@ INSTALLED_APPS = [
     'NativeApp',
     'phonenumber_field', 
     'Admin_app',
+    'cities_light',
+    'import_export'
 ]
+
+CITIES_LIGHT_TRANSLATION_LANGUAGES = ['en']
+CITIES_LIGHT_INCLUDE_COUNTRIES = ['IN']
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

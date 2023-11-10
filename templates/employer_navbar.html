@@ -1,4 +1,9 @@
 {% load static %}
+<style>
+    .navbar {
+        height: 5rem;;
+    }
+</style>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
     <a class="navbar-brand" style="margin-left:1rem;" href="#">Employer Home</a>
@@ -18,7 +23,7 @@
                     {% comment %} <a class="dropdown-item" href="#">Edit Password</a>
                     <div class="dropdown-divider"></div> {% endcomment %}
                     <a class="dropdown-item" href="{% url 'password_change_emp' %}">Password change</a>
-                    <a class="dropdown-item" href="{% url 'logout_employer' %}">Logout</a>
+                    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
                 </div>
             </li>
             {% comment %} <li class="nav-item">
@@ -28,6 +33,6 @@
         {% comment %} <form class="form-inline ml-auto"> 
             <input class="form-control" type="search" placeholder="Search">
             <button class="btn btn-secondary" type="submit">Search</button>
-        </form> {% endcomment %}
+        </form>  {% endcomment %}
     </div>
 </nav>

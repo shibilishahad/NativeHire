@@ -119,11 +119,26 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" placeholder="Password" class="form-control" required>
             </div>
-            <button type="submit" class="btn btn-primary">Login</button>
+            <p class="mt-2 text-center">
+                <a href="{% url 'reset_pass' %}" class="btn-link">Forgot Password?</a>
+            </p>
+            <button type="submit" id="login_button" onclick="handleLogin()" class="btn btn-primary">Login</button>
         </form>
         <p class="mt-3 text-center">
             Not registered? <a href="{% url 'jobtype' %}" class="btn-link">Sign up here</a>
         </p>
     </div>
+    <script>
+        function handleLogin() {
+            var button = document.getElementById("login_button");
+            button.innerHTML = 'logging in...<span class="spinner"></span>';
+            button.classList.add("logging in");
+            setTimeout(function() {
+                button.innerHTML = 'Register';
+                button.classList.remove("logging in");
+                // Add your login logic here
+            }, 5000); // Simulating a 2-second delay
+        }
+      </script>
 </body>
 </html>

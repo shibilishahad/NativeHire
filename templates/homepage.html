@@ -59,7 +59,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.1);
+            background: rgba(0, 0, 0, 0.3);
             border-radius: 10px;
         }
 
@@ -79,13 +79,13 @@
         .app-title {
             font-size: 2.5rem;
             margin: 20px 0;
-            color: white;
+            color: #FF5733; /* Orange color */
         }
 
         .app-description {
             font-size: 1rem;
             margin-bottom: 2rem;
-            color: white;
+            color: #338DFF; /* Blue color */
         }
 
         .cta-buttons {
@@ -94,36 +94,33 @@
             gap: 20px;
         }
 
-        {% comment %} .cta-button {
-            padding: 15px 20px; 
+        .cta-button {
+            padding: 15px 20px;
             border-radius: 5px;
             font-size: 1rem;
             text-align: center;
             text-decoration: none;
             color: white;
-            background-color: transparent; /* Remove background color */
-            border: 2px solid white; /* Add a white border */
+            background-color: #FF5733; /* Orange color */
+            border: 2px solid #FF5733; /* Orange border */
             transition: background-color 0.3s ease;
-        } {% endcomment %}
+        }
 
-        .cta-button.employer {
-            background: #FF5733;
-        }
-    
         .cta-button.worker {
-            background: #338DFF;
+            background: #338DFF; /* Blue color */
+            border: 2px solid #338DFF; /* Blue border */
         }
-    
-        .cta-button.employer:hover {
-            background: #FF5733;
+
+        .cta-button:hover {
+            background: #FF5733; /* Orange hover color */
         }
-    
+
         .cta-button.worker:hover {
-            background: #338DFF; 
+            background: #338DFF; /* Blue hover color */
         }
 
         .benefits {
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.7);
             padding: 20px;
             border-radius: 10px;
             margin-top: 30px;
@@ -138,7 +135,7 @@
         .benefits h5 {
             font-size: 1.25rem;
             margin-top: 10px;
-            color: #FF5733;
+            color: #FF5733; /* Orange color */
         }
 
         .benefits p {
@@ -167,14 +164,14 @@
 
             .cta-button {
                 width: 100%;
-                max-width: 250px; 
+                max-width: 250px;
             }
 
             .benefits h3,
             .benefits h5,
             .benefits p {
                 font-size: 1rem;
-                color: white; /* Set text color to white */
+                color: white;
             }
         }
     </style>
@@ -188,53 +185,39 @@
         <div class="content-container">
             <img src="{% static 'images/logo-no-background.png' %}" alt="NativeHire Logo" class="logo">
             <h1 class="app-title">Welcome to NativeHire</h1>
-            <p class="app-description">Your bridge to connecting with skilled workers and finding temporary job opportunities.</p>
+            <p class="app-description" style="color:white;">Your bridge to connecting with skilled workers and finding temporary job opportunities.</p>
             <div class="cta-buttons">
                 <a href="{% url 'user_login' %}" class="cta-button employer">Get Started</a>
             </div>
         </div>
     </div>
-    <div class="container benefits">
-        <h3>For Workers</h3>
+    <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                <h5>Find Job Opportunities Easily</h5>
-                <p>The app provides workers with a convenient platform to search and apply for temporary job opportunities in various industries. Workers can easily find job listings that match their skills and availability.</p>
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <h3 class="card-header" style="background: rgba(220, 220, 255, 1);">Employers</h3>
+                    <div class="card-body" style="background: rgba(220, 220, 255, 1);">
+                        <h5 class="card-title">Efficient Hiring Process</h5>
+                        <p>Employers can register on our platform to access a pool of skilled workers. Create your account to post job listings and connect with workers. Search for workers based on their skills, availability, and expertise. Find the right talent for your job requirements. Create job listings specifying job types, duration, and requirements. Workers can apply for your job opportunities. You can hire workers for specific days to meet your project timelines. Find workers who match your availability needs.</p>
+                    </div>
+                    <img src="{% static 'images/employer.jpg' %}" alt="Employer Image" class="img-fluid">
+                    <div class="card-body" style="background: rgba(220, 220, 255, 1);">
+                        <a href="{% url 'employer_reg' %}" class="btn btn-primary">Register as Employer</a>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-12">
-                <h5>Showcase Skills and Availability</h5>
-                <p>Workers can create profiles that showcase their skills, experience, and availability. They can update their availability in real-time, making it easier for employers to find suitable candidates for their temporary job needs.</p>
-            </div>
-            <div class="col-md-12">
-                <h5>Flexible Working</h5>
-                <p>NativeHire offers workers the flexibility to choose the jobs that suit their schedule and preferences. Workers can take on jobs that align with their expertise and desired work-life balance.</p>
-            </div>
-            <div class="col-md-12">
-                <h5>Build a Reputation</h5>
-                <p>Workers can receive ratings and reviews from employers after completing jobs. Positive reviews can help workers build a good reputation and increase their chances of getting hired for future opportunities.</p>
-            </div>
-        </div>
-        <h3>For Employers</h3>
-        <div class="row">
-            <div class="col-md-12">
-                <h5>Efficient Hiring Process</h5>
-                <p>NativeHire streamlines the hiring process for employers, enabling them to find skilled workers quickly and easily. Employers can post job listings, specify their requirements, and connect with workers who match their needs.</p>
-            </div>
-            <div class="col-md-12">
-                <h5>Access to a Skilled Workforce</h5>
-                <p>Employers have access to a diverse pool of skilled workers across various industries, giving them the flexibility to find the right talent for their short-term projects. They can review worker profiles, including skills, experience, and ratings, to make informed hiring decisions.</p>
-            </div>
-            <div class="col-md-12">
-                <h5>Real-time Availability Information</h5>
-                <p>Employers can view workers' real-time availability, helping them make immediate hiring decisions based on their project timelines. This feature ensures that employers can find workers who can start working quickly.</p>
-            </div>
-            <div class="col-md-12">
-                <h5>Cost-Effective Solution</h5>
-                <p>NativeHire offers a cost-effective solution for employers who require temporary workers. Employers can post job listings, review worker profiles, and hire the right talent without the overhead of a long-term employment contract.</p>
-            </div>
-            <div class="col-md-12">
-                <h5>Rating and Review System</h5>
-                <p>Employers can rate and review workers after a job is completed, helping build a transparent and trustworthy community. This system assists employers in making informed hiring decisions and recognizing top-performing workers.</p>
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <h3 class="card-header" style="background: rgba(220, 220, 255, 1);">Workers</h3>
+                    <div class="card-body" style="background: rgba(220, 220, 255, 1);">
+                        <h5 class="card-title">Find Job Opportunities Easily</h5>
+                        <p>Our platform provides workers with a convenient platform to search and apply for temporary job opportunities in various industries. Easily find job listings that match your skills and availability. Workers can create profiles and register on our platform. You can specify your desired wage and provide other relevant details. Mention your available days to help employers find workers who match their project timelines. Accept or decline employers' requests to hire you for job opportunities.</p>
+                    </div>
+                    <img src="{% static 'images/worker.jpg' %}" alt="Worker Image" class="img-fluid">
+                    <div class="card-body" style="background: rgba(220, 220, 255, 1);">
+                        <a href="{% url 'worker_reg' %}" class="btn btn-primary">Register as Worker</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

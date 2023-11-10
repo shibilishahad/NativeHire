@@ -1,14 +1,10 @@
-from .models import User
 from django import forms
-from .models import Employer
+from cities_light.models import Country, City
 
+class CountryCityForm(forms.Form):
+    country = forms.ModelChoiceField(queryset=Country.objects.filter(name='India'), empty_label="Select a country")
+    
+    city = forms.ModelChoiceField(queryset=City.objects.filter(country__name='India'), empty_label="Select a city")
 
-class UserForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = '__all__'
-
-class EmployerForm(forms.ModelForm):
-    class Meta:
-        model = Employer
-        fields = '__all__'
+class CityFilterForm(forms.Form):
+    city = forms.ModelChoiceField(queryset=City.objects.filter(country__name='India'), empty_label="All Cities")    

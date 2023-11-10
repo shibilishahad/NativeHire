@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
-from .views import EmployerUpdate, WorkerUpdate, home, user_login,employer_reg,worker_reg,set_availability,PasswordChange,PasswordChangeEmp,AboutUs
+from .views import EmployerUpdate, WorkerUpdate, home, user_login,employer_reg,worker_reg,set_availability,PasswordChange,PasswordChangeEmp,AboutUs,ResetPass
+from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
@@ -19,8 +20,7 @@ urlpatterns = [
     path('negotiate/<int:worker_id>/', views.negotiate, name='negotiate'),
     path('accept_hiring/<int:hiring_id>/',views.accept_hiring, name='accept_hiring'),
     path('reject_hiring/<int:hiring_id>/', views.reject_hiring, name='reject_hiring'),
-    path('logout_worker/',views.logout_worker, name='logout_worker'),
-    path('logout_employer/',views.logout_employer, name='logout_employer'),
+    path('logout',views.logout, name='logout'),
     path('employer_home/',views.employer_home, name='employer_home'),
     path('worker_home/', views.worker_home, name='worker_home'),
     path('set-availability/', set_availability.as_view(), name='set_availability'),
@@ -28,6 +28,6 @@ urlpatterns = [
     path('employer_update/<int:update_id>/', EmployerUpdate.as_view(), name='employer_update'),
     path('password_change', PasswordChange.as_view(), name="password_change"),
     path('password_change_emp', PasswordChangeEmp.as_view(), name="password_change_emp"),
-    path('about_us/', AboutUs.as_view(),name='about_us')
-
+    path('about_us/', AboutUs.as_view(),name='about_us'),
+    path('reset_pass/', ResetPass.as_view(), name='reset_pass')
 ]

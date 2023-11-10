@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration Page</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> 
     <style>
         body {
             background-image: url("{% static 'images/background2.jpg' %}");
@@ -23,8 +24,8 @@
         }
 
         .container {
-            max-width: 400px;
-            width: 90%;
+            max-width: 496px;
+            width: 100%;
             background: rgba(255, 255, 255, 0.9);
             border-radius: 10px;
             padding: 20px;
@@ -87,7 +88,7 @@
         }
         
         .checkbox-label {
-            margin-right: 20px; /* Add some spacing between checkboxes */
+            margin-right: 20px;
         }
         
         .loading-overlay {
@@ -142,6 +143,21 @@
             color: #fff;
         }
 
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .form-group.country {
+            width: 48%;
+        }
+
+        .form-group.city {
+            width: 48%;
+        }
+
+
     </style>
 </head>
 <body>
@@ -164,6 +180,7 @@
                 <label for="f_name">First Name</label>
                 <input type="text" id="first_name" name="first_name" class="form-control" placeholder="First Name" pattern="[A-Za-z ]+" title="First name must be in english alphabets" required>
             </div>
+            
             <div class="form-group">
                 <label for="l_name">Last Name</label>
                 <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Last Name" pattern="[A-Za-z ]+" title="Last name must be in english alphabets" required>
@@ -176,17 +193,49 @@
                 <label for="email">Email</label>
                 <input type="email" id="email" class="form-control" name="email" placeholder="Email" pattern="^[^@]+@[^@]+\.(com|in)$" required>
             </div>
+            <div class="row">
+                <div class="form-group country">
+                    <label for="{{ country_city_form.country.id_for_label }}">Country:</label>
+                    {{ country_city_form.country }}
+                </div>
+            </div>
+            <div>
+                <div class="form-group city">
+                    <label for="{{ country_city_form.city.id_for_label }}">City:</label>
+                    {{ country_city_form.city }}
+                </div>
+            </div>
+            
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" class="form-control" placeholder="Password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}" title="Must contain at least one number and one special character one uppercase and lowercase letter, and at least 8 or more characters"  required>
+                <i class="password-toggle" onclick="togglePasswordVisibility()">
+                    <i class="fas fa-eye"></i>
+                </i>
+                <div class="input-group">
+                    <input type="password" id="Password" class="form-control" name="password" placeholder="Password" pattern="(?=.\d)(?=.[a-z])(?=.[A-Z])(?=.?[0-9])(?=.[!@#$%^&]).{8,26}" title="Must contain at least one number and one special character one uppercase and lowercase letter, and at least 8 or more characters" required>
+                    <div class="input-group-append">
+                        
+                    </div>
+                </div>
             </div>
+            
+            <script>
+                function togglePasswordVisibility() {
+                    var passwordInput = document.getElementById("Password");
+                    if (passwordInput.type === "password") {
+                        passwordInput.type = "text";
+                    } else {
+                        passwordInput.type = "password";
+                    }
+                }
+            </script>
             <div class="mb-3">
                 <label for="c_password" class="form-label">Confirm Password</label>
                 <input type="password" name="c_password" class="form-control" id="c_password" placeholder="Password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}" title="Must contain at least one number and one special character one uppercase and lowercase letter, and at least 8 or more characters" required>
             </div>
             <div class="form-group">
-                <label for="phone_no">Phone Number</label>
-                <input type="text" id="phone_no" name="phone_no" class="form-control" placeholder="Phone Number" pattern="(?=.?[0-9]).{10}" maxlength=10 title="Use valid phone number" required>
+                <label for="phone_no">Phone Number ( +91 )</label>
+                <input type="tel" id="phone_no" name="phone_no" class="form-control" placeholder="Phone Number" maxlength="10" pattern="[0-9]{10}" title="Must have 10 digits" required>
             </div>
             <div class="form-group">
                 <label for="location">Location</label>
@@ -218,26 +267,8 @@
             </div>
             <div class="form-group">
                 <label for="experience">Experience (in years)</label>
-                <input type="text" id="experience" name="experience" class="form-control" placeholder="Experience" oninput="validateExperience(this)" required>
+                <input type="number" id="experience" name="experience" class="form-control" placeholder="Experience" min=0 max=30 pattern="\d+" required>
             </div>
-            <script>
-            function validateExperience(input) {
-                var value = input.value;
-                var maxExperience = 30; // Maximum allowed experience
-            
-                // Check if the input value is a valid number
-                if (isNaN(value)) {
-                    input.setCustomValidity("Please enter a valid number.");
-                } else {
-                    var numericValue = parseFloat(value);
-                    if (numericValue > maxExperience) {
-                        input.setCustomValidity("Maximum experience allowed is 30 years.");
-                    } else {
-                        input.setCustomValidity(""); // Reset any custom validation message
-                    }
-                }
-            }
-        </script>
             
             <div class="form-group">
                 <label for="job_types">Job Type:</label>
@@ -280,7 +311,7 @@
                 <input type="file" id="profile_pic" name="profile_pic" class="form-control-file" accept="pics/*" required>
             </div>
 
-            <button type="submit" class="btn btn-primary">Register</button>
+            <button type="submit" id="submit_button" onclick="handleLogin()" class="btn btn-primary">Register</button>
         </form>
         <div class="loading-overlay" id="loadingOverlay">
             <div class="loading-spinner"></div>
@@ -309,5 +340,17 @@
             });
         });
     </script>
+    <script>
+        function handleLogin() {
+            var button = document.getElementById("submit_button");
+            button.innerHTML = 'Registering...<span class="spinner"></span>';
+            button.classList.add("Registering");
+            setTimeout(function() {
+                button.innerHTML = 'Register';
+                button.classList.remove("Registering");
+                // Add your login logic here
+            }, 5000); // Simulating a 2-second delay
+        }
+      </script>
 </body>
 </html>

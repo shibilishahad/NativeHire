@@ -50,14 +50,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <i class="fa-light fa-building" style="color: #ff0000;"></i>
                 <span class="badge bg-danger">{{employer.count}}</span>
             </a>
-            <ul class="dropdown-menu extended tasks-bar">
+            <ul class="dropdown-menu extended tasks-bar" style="max-height: 300px; overflow-y: auto;">
                 <li>
                     <p class="">{{employer.count}} new Employers</p>
                 </li>
                 <li>
                     {% for e in employer %}
                     <a href="#">
-                        <span class="photo"><img alt="avatar" src="{% static 'Admin_app/images/3.png' %}"></span>
                                 <span class="subject">
                                 <span class="from"><b>{{ e.user.username}}</b></span>
                                 <span class="time">{{e.user.date_joined}}</span>
@@ -74,19 +73,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         </li>
         <!-- settings end -->
         <!-- inbox dropdown start-->
-        <li id="header_inbox_bar" class="dropdown">
+        <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                 <i class="fa fa-envelope-o"></i>
                 <span class="badge bg-important">{{worker.count}}</span>
             </a>
-            <ul class="dropdown-menu extended inbox">
+            <ul class="dropdown-menu extended inbox" style="max-height: 300px; overflow-y: auto;">
                 <li>
                     <p class="red">{{worker.count}} new workers</p>
                 </li>
                 <li>
                     {% for k in worker %}
                     <a href="#">
-                        <span class="photo"><img alt="avatar" src="{{ k.user.customer.profile_picture.url }}"></span>
                                 <span class="subject">
                                 <span class="from">{{ k.user.username}}</span>
                                 <span class="time">{{k.user.date_joined}}</span>
@@ -159,7 +157,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <ul class="dropdown-menu extended logout">
                 {% comment %} <li><a href="{% url 'Admin_app:logout_admin' %}"><i class=" fa fa-suitcase"></i>Profile</a></li> {% endcomment %}
                 {% comment %} <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li> {% endcomment %}
-                <li><a href="{% url 'Admin_app:logout_admin' %}"><i class="fa fa-key"></i> Log Out</a></li>
+                <li><a href="{% url 'logout' %}"><i class="fa fa-key"></i> Log Out</a></li>
             </ul>
         </li>
         <!-- user login dropdown end -->

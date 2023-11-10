@@ -1,5 +1,9 @@
 {% extends "employer_base.html" %}
 {% block body %}
+{% load static %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 <style>
     body {
         background-color: #242424;
@@ -99,7 +103,26 @@
                     </div>
                     <div class="form-group">
                         <label for="total_wage" class="h5">Total Wage:</label>
-                        <input type="text" class="form-control" id="total_wage" name="total_wage" required>
+                        <input type="text" class="form-control" id="total_wage" name="total_wage" placeholder="Total wage" oninput="validateWage(this)" required>
+                        <script>
+                            function validateWage(input) {
+                            
+                            input.value = input.value.replace(/[^0-9.]/g, '');
+            
+                            
+                            const parts = input.value.split('.');
+                            
+                            
+                            if (parts.length > 2) {
+                                input.value = parts[0] + '.' + parts.slice(1, 3).join('');
+                            }
+            
+                            
+                            if (parts[1] && parts[1].length > 2) {
+                                input.value = parts[0] + '.' + parts[1].substring(0, 2);
+                            }
+                            }
+                            </script>
                     </div>
                     <script>
                         var currentDate = new Date().toISOString().slice(0, 10);
@@ -171,11 +194,136 @@
                         });
                     </script>
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" id="submit_button" onclick="handleLogin()" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
+                <script>
+                    function handleLogin() {
+                        var button = document.getElementById("submit_button");
+                        button.innerHTML = 'Submitting...<span class="spinner"></span>';
+                        button.classList.add("Submitting");
+                        // Add your login logic here
+                        // Simulate a delay with setTimeout for demonstration purposes
+                        setTimeout(function() {
+                            // Remove the loading state and reset the button text
+                            button.innerHTML = 'Submit';
+                            button.classList.remove("Submitting");
+                        }, 5000); // Simulating a 2-second delay
+                    }
+                  </script>
             </div>
         </div>
     </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+ {% comment %} FOOTER CONTENTS START  {% endcomment %}
+ <style>
+    /*footer*/
+    @media (max-width: 280px) {
+        footer {
+            padding: 10px; 
+        }
+
+        .container {
+            padding-left: 5px; 
+            padding-right: 5px; 
+        }
+
+        .foote_bottom_ul_amrc {
+            text-align: center; 
+        }
+
+        .social_footer_ul {
+            text-align: center; 
+        }
+
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        
+    }
+    .col_white_amrc { color:#FFF;}
+    footer { width:100%; background-color:#263238; min-height:150px; padding:10px 0px 15px 0px ; } /* Decreased min-height */
+    .pt2 { padding-top:20px ; margin-bottom:10px ; }
+footer p { font-size:13px; color:#CCC; padding-bottom:0px; margin-bottom:8px;}
+.mb10 { padding-bottom:15px ;}
+.footer_ul_amrc { margin:0px ; list-style-type:none ; font-size:14px; padding:0px 0px 10px 0px ; }
+.footer_ul_amrc li {padding:0px 0px 5px 0px;}
+.footer_ul_amrc li a{ color:#CCC;}
+.footer_ul_amrc li a:hover{ color:#fff; text-decoration:none;}
+.fleft { float:left;}
+.padding-right { padding-right:10px; }
+
+.footer_ul2_amrc {margin:0px; list-style-type:none; padding:0px;}
+.footer_ul2_amrc li p { display:table; }
+.footer_ul2_amrc li a:hover { text-decoration:none;}
+.footer_ul2_amrc li i { margin-top:5px;}
+
+.bottom_border { border-bottom:1px solid #323f45; padding-bottom:20px;}
+.foote_bottom_ul_amrc {
+    list-style-type:none;
+    padding:0px;
+    display:table;
+    margin-top: 10px;
+    margin-right: auto;
+    margin-bottom: 10px;
+    margin-left: auto;
+}
+.foote_bottom_ul_amrc li { display:inline;}
+.foote_bottom_ul_amrc li a { color:#999; margin:0 12px;}
+
+.social_footer_ul { display:table; margin:15px auto 0 auto; list-style-type:none;  }
+.social_footer_ul li { padding-left:20px; padding-top:10px; float:left; }
+.social_footer_ul li a { color:#CCC; border:1px solid #CCC; padding:8px;border-radius:50%;}
+.social_footer_ul li i {  width:20px; height:20px; text-align:center;}
+
+/* Credit to https://bootsnipp.com/snippets/bxDBA */
+</style>
+<footer class="footer">
+    <div class="container bottom_border">
+        <div class="row">
+            <div class="col-sm-4 col-md col-sm-4 col-12 col">
+                <h5 class="headin5_amrc col_white_amrc pt2">Find us</h5>
+                <p class="mb10">NativeHire is a user-friendly web app that streamlines job searches and hiring processes. <br>NativeHire connects job seekers with employers, offers efficient communication, and uses <br>algorithms for better matching, making it a valuable resource for both parties.</p>
+                <p><i class="fa fa-location-arrow"></i> Calicut, Kerala </p>
+                <p><i class="fa fa-phone"></i> +91-8547278372  </p>
+                <p><i class="fa fa-envelope"></i> NativeHire@gmail.com  </p>
+            </div>
+            <div class="col-sm-4 col-md col-sm-4 col-12 col">
+                <img src="{% static 'images/logo-no-background.png' %}" alt="Your Logo" class="img-responsive" style="float: right;width:18rem;height:15rem;">
+            </div>
+        </div>
+    
+        <ul class="foote_bottom_ul_amrc">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'about_us' %}">About</a></li>
+        </ul>
+        <p class="text-center">Copyright @2023 | Designed by <a href="http://shadiportfolio.pythonanywhere.com/">MUHAMMED SHADI</a></p>
+        <ul class="social_footer_ul">
+            <li><a href="https://twitter.com/shadimk111"><i class="fab fa-facebook-f"></i></a></li>
+            <li><a href="https://github.com/SHADIMK7"><i class="fab fa-github"></i></a></li>
+            <li><a href="https://linkedin.com/in/muhammedshadi"><i class="fab fa-linkedin"></i></a></li>
+            <li><a href="https://instagram.com/s.h_a.d.i"><i class="fab fa-instagram"></i></a></li>
+        </ul>
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+{% comment %} FOOTER CONTENTS END  {% endcomment %}
 {% endblock %}

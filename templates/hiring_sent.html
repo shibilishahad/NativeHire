@@ -1,0 +1,10 @@
+<html>
+<body>
+<p>{{employer.user.first_name}} {{employer.user.last_name}} ({{employer.user.username}}) has sent you hiring request with Job duration from <strong>{{hiring.start_date}} to {{hiring.end_date}}</strong> for total wage of ₹{{hiring.cost}}.</p>
+{% if reason_text %}
+<p>Rejection Reason: {{ reason_text }}</p>
+{% endif %}
+<p>Thank you!</p>
+<img src ="cid:logo" alt="Your Logo" style="height: 6rem; width: 6rem;">
+</body>
+</html>

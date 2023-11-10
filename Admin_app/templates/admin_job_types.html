@@ -72,13 +72,21 @@
             {% for i in job_types %}        
                 <tr>
                     <td>{{ i.id }}</td>
-                    <td>{{ i }}</td>
-                    <td><form method="post" action="{% url 'Admin_app:TypeView' %}">
-                      {% csrf_token %}
-                      <input type="hidden" name="type_id" value="{{ i.id }}">
-                      <button type="submit" class="btn btn-danger" name="delete_type">Delete</button>
-                  </form>
-                </td>
+                    <td>{{ i.type_of_jobs }}</td>
+                    <td>
+                        <form method="post" action="{% url 'Admin_app:TypeView' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="type_id" value="{{ i.id }}">
+                            <button type="submit" class="btn btn-danger" name="delete_type">Delete</button>
+                        </form>
+                        <!-- Update Form -->
+                        <form method="post" action="{% url 'Admin_app:TypeView' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="type_id" value="{{ i.id }}">
+                            <input type="text" name="new_type_name" placeholder="New Job Type Name" required>
+                            <button type="submit" class="btn btn-primary" name="update_type">Update</button>
+                        </form>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

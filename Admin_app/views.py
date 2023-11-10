@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from Admin_app.models import TypeOfJobs
 from django.contrib.auth.models import User, auth
-from NativeApp.models import Customer, Employer, Hiring, Worker
+from NativeApp.models import Customer, Employer, Hiring, HiringHistory, Worker
 from django.urls import reverse
 
 
@@ -18,32 +18,47 @@ class AdminHome(View):
     def get(self, request):
         if if_login(request,request.user):
             return if_login(request, request.user)
+        # total_yy = Hiring.objects.all()
+        # total = total_yy.filter(status='Accepted')
         total = Hiring.objects.filter(status='Accepted')
         total1 = Hiring.objects.filter(status='Pending')
         worker = Worker.objects.all()
+        customer = Customer.objects.all()
+        hiring_history = HiringHistory.objects.all()
+        # print('workreeeeeeeeee picc',worker.customer.profile_pic)
         employer = Employer.objects.all()
-        return render(request, 'admin_home.html', {'worker': worker, 'employer': employer, 'total': total, 'total1': total1})
+        return render(request, 'admin_home.html', {'worker': worker, 'employer': employer, 'total': total, 'total1': total1,'customer':customer,'hiring_history':hiring_history})
 
 class AdminEmp(View):
     def get(self, request):
         if if_login(request,request.user):
             return if_login(request, request.user)
+        worker = Worker.objects.all()
+        customer = Customer.objects.all()
         emp = Customer.objects.all()
-        return render(request, 'admin_emp.html', {'emp': emp})
+        employer = Employer.objects.all()
+
+        return render(request, 'admin_emp.html', {'emp': emp,'worker':worker,'customer':customer,'employer':employer})
 
 class AdminWorker(View):
     def get(self, request):
         if if_login(request,request.user):
             return if_login(request, request.user)
         emp = Customer.objects.all()
-        return render(request, 'admin_worker.html', {'emp': emp})
+        worker = Worker.objects.all()
+        customer = Customer.objects.all()
+        employer = Employer.objects.all()
+        return render(request, 'admin_worker.html', {'emp': emp,'worker':worker,'customer':customer,'employer':employer})
 
 class Type(View):
     def get(self, request):
-        if if_login(request,request.user):
+        if if_login(request, request.user):
             return if_login(request, request.user)
         job_types = TypeOfJobs.objects.all()
-        return render(request, 'admin_job_types.html', {'job_types': job_types})
+        worker = Worker.objects.all()
+        customer = Customer.objects.all()
+        employer = Employer.objects.all()
+        return render(request, 'admin_job_types.html', {'job_types': job_types,'worker':worker,'customer':customer,'employer':employer})
 
     def post(self, request):
         if 'add_type' in request.POST:
@@ -54,6 +69,17 @@ class Type(View):
             type_id = request.POST.get('type_id')
             if type_id:
                 TypeOfJobs.objects.filter(id=type_id).delete()
+        elif 'update_type' in request.POST:
+            type_id = request.POST.get('type_id')
+            new_type_name = request.POST.get('new_type_name')
+            if type_id and new_type_name:
+                try:
+                    job_type = TypeOfJobs.objects.get(id=type_id)
+                    job_type.type_of_jobs = new_type_name
+                    job_type.save()
+                except TypeOfJobs.DoesNotExist:
+                    pass
+
         return redirect(reverse('Admin_app:TypeView'))
 
 class DeleteEmployer(View):
@@ -94,14 +120,6 @@ class DeleteWork(View):
         worker2.delete()
         return redirect(reverse('Admin_app:admin_worker'))
 
-class LogoutAdmin(View):
-    def get(self, request):
-        if if_login(request,request.user):
-            return if_login(request, request.user)
-        auth.logout(request)
-        request.session.flush()
-        return redirect('home')
-
 class Notifications(View):
     def get(self, request, worker_id):
         if if_login(request,request.user):
@@ -109,4 +127,5 @@ class Notifications(View):
         employer = Employer.objects.all()
         customer = Customer.objects.all()
         worker = get_object_or_404(Worker, id=worker_id)
-        return render(request, 'index.html', {'worker': worker, 'employer': employer, 'customer': customer})
+        workers = Worker.objects.all()
+        return render(request, 'index.html', {'worker': worker, 'employer': employer, 'customer': customer,'workers':workers})

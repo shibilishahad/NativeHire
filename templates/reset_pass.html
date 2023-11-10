@@ -1,0 +1,81 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot Password</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+    
+        body {
+            display: flex;
+            flex-direction: column;
+            background-image: url("{% static 'images/background2.jpg' %}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+        }
+    
+        .footer {
+            background-color: #263238;
+            color: #FFF;
+            padding: 10px 0 15px 0;
+            text-align: center;
+            margin-top: 2rem; 
+            margin-bottom: 2rem;
+        }
+        .company-name {
+            font-size: 3rem;
+            color: #000;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); 
+            background: rgba(220, 220, 255, 0.7);
+            padding: 1rem ;
+            border-radius: 10px; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="container text-center" style="padding-top:2rem;padding-bottom:5rem;">
+            <h1 class="company-name">NativeHire</h1>
+        </div>
+        <div class="container" style="padding-bottom:10rem;">
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-sm-10 col-12">
+                    <div class="card p-4 text-center" style="background: rgba(220, 220, 255, 0.5); box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); border-radius: 10px;">
+                        <h2 class="mb-4">Forgot Password</h2>
+
+                        <form method="post" action="{% url 'reset_pass' %}">
+                            {% csrf_token %}
+                            {% if messages %}
+                                <ul class="messages">
+                                    {% for message in messages %}
+                                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                            <div class="form-group">
+                                <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        {% include "footer.html" %}
+    </div>
+</body>
+</html>

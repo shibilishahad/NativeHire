@@ -89,7 +89,7 @@
 						<h4>Total Hires</h4>
 						<h3>
 							
-							{{total.count}}
+							{{hiring_history.count}}
 						</h3>
 					</div>
 				  <div class="clearfix"> </div>
@@ -165,47 +165,23 @@
 					Notification
 				</header>
 				<div class="notify-w3ls">
-						<h3>Accepted</h3>
-						{% for hiring in total %}
-							<div class="alert alert-info clearfix">
-								<span class="alert-icon"><i class="fa fa-envelope-o"></i></span>
-								<div class="notification-info">
-									<ul class="clearfix notification-meta">
-										<li class="pull-left notification-sender">
-											<span><a href="#">{{ hiring.worker.user.first_name }}</a></span> has accepted Hiring request from
-											{{ hiring.employer.user.first_name }}
-										</li>
-										<li class="pull-right notification-time">{{ hiring.hire_posting|timesince }} ago</li>
-									</ul>
-									<p>
-										Hiring Accepted
-									</p>
-								</div>
+					<h3>Hiring History</h3>
+					{% for history in hiring_history %}
+						<div class="alert alert-info clearfix">
+							<span class="alert-icon"><i class="fa fa-envelope-o"></i></span>
+							<div class="notification-info">
+								<ul class="clearfix notification-meta">
+									<li class="pull-left notification-sender">
+										<span>{{ history.worker_name }}</span> was hired by
+										{{ history.employer_name }}
+									</li>
+								</ul>
+								<p>
+									Status: {{ history.status }} - Start Date: {{ history.start_date }} - End Date: {{ history.end_date }} - Total wage Cost: {{ history.cost }}
+								</p>
 							</div>
-						{% endfor %}
-						<h3>Pending</h3>
-						{% for hiring in total1 %}
-							<div class="alert alert-info clearfix">
-								<span class="alert-icon"><i class="fa fa-envelope-o"></i></span>
-								<div class="notification-info">
-									<ul class="clearfix notification-meta">
-										<li class="pull-left notification-sender">
-											<span><a href="#">{{ hiring.worker.user.first_name }}</a></span> has got Hiring request from
-											{{ hiring.employer.user.first_name }}
-										</li>
-										<li class="pull-right notification-time">{{ hiring.hire_posting|timesince }} ago</li>
-									</ul>
-									<p>
-										Hiring request
-									</p>
-								</div>
-							</div>
-						{% endfor %}
-						
-						
-					</div>
-				
-				<!--notification end-->
+						</div>
+					{% endfor %}
 				</div>
 			</div>
 			<div class="clearfix"> </div>
