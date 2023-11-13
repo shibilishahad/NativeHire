@@ -51,12 +51,11 @@
         }
         
         .btn-custom:hover {
-            background-color: #0056b3;
+            background: #fff;
+            color: #007BFF;
+            border: 1px solid #007BFF; 
         }
         
-        .btn-custom:hover {
-            background-color: #0056b3;
-        }
         .card-title {
             color: #007BFF;
             font-weight: bold;
@@ -118,7 +117,7 @@
                         </div>
                         <p class="card-text">Your bookings, notifications, and more.</p>
                         <a href="{% url 'set_availability' %}" class="btn btn-custom btn-block">Set Availability</a>
-                        <a href="{% url 'worker_update' update_id=user.id %}" class="btn btn-secondary btn-block">Update Details</a>
+                        <a href="{% url 'worker_update' update_id=user.id %}" class="btn btn-custom btn-block">Update Details</a>
                     </div>
                 </div>
             </div>

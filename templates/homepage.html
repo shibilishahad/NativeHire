@@ -8,7 +8,7 @@
     <title>NativeHire - Your Job Connection</title>
     <style>
         body {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{% static 'images/background2.jpg' %}');
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{% static 'images/pexels-ds-stories-6991806.jpg' %}');
             background-size: cover;
             color: white;
             font-family: Arial, sans-serif;
@@ -59,7 +59,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.6);
             border-radius: 10px;
         }
 
@@ -79,13 +79,13 @@
         .app-title {
             font-size: 2.5rem;
             margin: 20px 0;
-            color: #FF5733; /* Orange color */
+            color:  #007BFF;
         }
 
         .app-description {
             font-size: 1rem;
             margin-bottom: 2rem;
-            color: #338DFF; /* Blue color */
+            color: #338DFF; 
         }
 
         .cta-buttons {
@@ -100,23 +100,25 @@
             font-size: 1rem;
             text-align: center;
             text-decoration: none;
-            color: white;
-            background-color: #FF5733; /* Orange color */
-            border: 2px solid #FF5733; /* Orange border */
+            color: #fff;
+            background-color: #007BFF;
+            border: 2px solid #007BFF;
             transition: background-color 0.3s ease;
         }
 
         .cta-button.worker {
-            background: #338DFF; /* Blue color */
-            border: 2px solid #338DFF; /* Blue border */
+            background: #338DFF;
+            border: 2px solid #338DFF; 
         }
 
         .cta-button:hover {
-            background: #FF5733; /* Orange hover color */
+            background: #fff;
+            color: #007BFF;
+            border: 1px solid #007BFF; 
         }
 
         .cta-button.worker:hover {
-            background: #338DFF; /* Blue hover color */
+            background: #338DFF; 
         }
 
         .benefits {
@@ -183,9 +185,9 @@
             Your browser does not support the video tag.
         </video>
         <div class="content-container">
-            <img src="{% static 'images/logo-no-background.png' %}" alt="NativeHire Logo" class="logo">
+            <img src="{% static 'images/nativehire-high-resolution-logo.png' %}" alt="NativeHire Logo" style="width:10rem;height: 8rem;" class="logo">
             <h1 class="app-title">Welcome to NativeHire</h1>
-            <p class="app-description" style="color:white;">Your bridge to connecting with skilled workers and finding temporary job opportunities.</p>
+            <p class="app-description" style="color:black;">Your bridge to connecting with skilled workers and finding temporary job opportunities.</p>
             <div class="cta-buttons">
                 <a href="{% url 'user_login' %}" class="cta-button employer">Get Started</a>
             </div>

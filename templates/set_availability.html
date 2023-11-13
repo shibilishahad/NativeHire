@@ -1,10 +1,9 @@
 {% extends "worker_base.html" %}
 {% block body %}
-<div class="container mt-4 pt-4">
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <div class="card">
-                <div class="card-body">
+<div class="container mt-4 pt-4" style="height: 100vh; display: flex; justify-content: center; align-items: center;">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
                     <h4 class="card-title">Set/Update Availability for {{ worker.user.username }}</h4>
                     <form method="post" action="{% url 'set_availability' %}">
                         {% csrf_token %}

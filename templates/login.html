@@ -33,12 +33,12 @@
 
         .container h2 {
             text-align: center;
-            color: #FF5733;
+            color: #007BFF;
             margin-bottom: 20px;
         }
 
         .container label {
-            font-size: 18px;
+            font-size: 15px;
             color: #333;
         }
 
@@ -54,7 +54,7 @@
         }
 
         .container .btn-primary {
-            background-color: #FF5733;
+            background-color: #007BFF;
             border: none;
             padding: 10px 20px;
             font-size: 18px;
@@ -64,7 +64,9 @@
         }
 
         .container .btn-primary:hover {
-            background-color: #FF3418;
+            background: #fff;
+            color: #007BFF;
+            border: 1px solid #007BFF; 
         }
 
         .container .btn-link {
@@ -112,12 +114,12 @@
                 </ul>
             {% endif %}
             <div class="form-group">
-                <label for="user_name_or_email">User Name or Email</label>
+                <label for="user_name_or_email"><b>User Name or Email</b></label>
                 <input type="text" id="user_name_or_email" name="user_name_or_email" placeholder="Username or Email" class="form-control" required>
             </div>
             <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Password" class="form-control" required>
+                <label for="password"><b>Password</b/></label>
+                <input type="password" id="password" name="password" placeholder="Enter your Password" class="form-control" required>
             </div>
             <p class="mt-2 text-center">
                 <a href="{% url 'reset_pass' %}" class="btn-link">Forgot Password?</a>

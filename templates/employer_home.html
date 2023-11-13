@@ -5,6 +5,17 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <style>
+    .custom-select {
+        width: 170px;
+        height: 38px;
+        padding: 0px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-top: 6px;
+        margin-bottom: 16px;
+        resize: vertical;
+    }       
     .card {
         background-color: rgba(255, 255, 255, 0.7);
         border: none;
@@ -39,6 +50,53 @@
     .status-item:not(:last-child) {
         margin-bottom: 10px;
     }
+
+    .worker-card {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .worker-card img {
+        height: 200px;
+        width: 100%;
+        object-fit: cover;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        transition: opacity 0.3s;
+    }
+
+    .worker-card:hover img {
+        opacity: 0.7;
+    }
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    .worker-card:hover .overlay {
+        opacity: 1;
+    }
+
+    .overlay button {
+        background-color: #28a745;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
 </style>
 <div class="container mt-4">
     <h1 class="text" style="color: white;font-weight:20rem;"><b>Welcome, {{ employer.user.username }}</b></h1>
@@ -62,43 +120,45 @@
                                 <p><strong>First Name:</strong> {{ employer.user.first_name }}</p>
                                 <p><strong>Location:</strong> {{ customer.location }}</p>
                             </div>
-                            <div class="col-md-4">
+                            <div style="margin-top:-4rem;" class="col-md-4">
                                 <img src="{{ customer.profile_pic.url }}" alt="Current Profile Picture" class="img-thumbnail preview-image">
                             </div>
                             
                         </div>
-                    <a href="{% url 'employer_update' update_id=employer.user.id %}" class="btn btn-primary btn-block" style="margin-left:5rem;">Update Profile</a>
+                    <a style="margin-left:0px;" href="{% url 'employer_update' update_id=employer.user.id %}" class="btn btn-primary btn-block" style="margin-left:5rem;">Update Profile</a>
                 </div>
             </div>
         </div>
-        <div class="card mb-4">
-            <div class="card-body">
-                <h5 class="card-title">Hiring Status</h5>
-                <div class="scroll-container">
-                    {% for hiring_request in hiring_requests %}
-                        <div class="status-item">
-                            <div class="worker-info">
-                                <p><strong>Worker:</strong> </p>
-                                <p>{{ hiring_request.worker.user.first_name }} {{ hiring_request.worker.user.last_name }}</p>
+        <div class="col-md-12">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Hiring Status</h5>
+                    <div class="scroll-container">
+                        {% for hiring_request in hiring_requests %}
+                            <div class="status-item">
+                                <div class="worker-info">
+                                    <p><strong>Worker:</strong> </p>
+                                    <p>{{ hiring_request.worker.user.first_name }} {{ hiring_request.worker.user.last_name }}</p>
+                                </div>
+                                <div class="status-info">
+                                    <p><strong>Status:</strong> </p>
+                                {{ hiring_request.status }}
+                                </div>
+                                <div class="reason-info">
+                                    <p><strong>Reason:</strong> </p>
+                                    {% if hiring_request.status == 'Rejected' %}
+                                        {% for rejection_reason in hiring_request.rejectionreason_set.all %}
+                                            {{ rejection_reason.reason_text }}
+                                        {% endfor %}
+                                        
+                                    {% endif %}
+                                </div>
                             </div>
-                            <div class="status-info">
-                                <p><strong>Status:</strong> </p>
-                            {{ hiring_request.status }}
-                            </div>
-                            <div class="reason-info">
-                                <p><strong>Reason:</strong> </p>
-                                {% if hiring_request.status == 'Rejected' %}
-                                    {% for rejection_reason in hiring_request.rejectionreason_set.all %}
-                                        {{ rejection_reason.reason_text }}
-                                    {% endfor %}
-                                    
-                                {% endif %}
-                            </div>
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
-        </div>        
+            </div>  
+        </div>      
         <div class="container-fluid">
             <form method="get">
                 {{ city_filter_form.city }}
@@ -119,43 +179,44 @@
 
                     {% if workers %}
                 {% for worker in workers %}
-                    <div class="col-md-3">
-                        <div class="card mb-4" style="background-color: rgba(255, 255, 255, 0.7);">
+                <div class="col-md-3">
+                    <div class="card worker-card">
+                        {% for customer in customers %}
+                            {% if worker.user.id == customer.user.id %}
+                                {% if customer.profile_pic %}
+                                    <img src="{{ customer.profile_pic.url }}" class="card-img-top" alt="Worker Image">
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                        <div class="overlay">
+                            <button onclick="window.location='{% url 'employer_hire' worker.id %}'" class="btn btn-primary btn-sm">Hire Me</button>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ worker.user.first_name }}</h5>
+                            <div class="d-flex justify-content-between">
+                                <p class="card-text">
+                                    <strong>Wage:</strong> ₹{{ worker.wage }}
+                                </p>
+                                <p class="card-text">
+                                    <strong>Experience:</strong> {{ worker.experience }} Years
+                                </p>
+                            </div>
                             {% for customer in customers %}
                                 {% if worker.user.id == customer.user.id %}
-                                    {% if customer.profile_pic %}
-                                        <img src="{{ customer.profile_pic.url }}" class="card-img-top" alt="Worker Image" style="height: 17rem; width: 16.3rem;">
-                                    {% endif %}
+                                    <p class="card-text">
+                                        <strong>Country:</strong> {{ worker.country }}
+                                    </p>
+                                    <p class="card-text">
+                                        <strong>City:</strong> {{ worker.city }}
+                                    </p>
+                                    <p class="card-text">
+                                        <strong>Location:</strong> {{ customer.location }}
+                                    </p>
                                 {% endif %}
                             {% endfor %}
-                            <div class="card-body">
-                                <h5 class="card-title">{{ worker.user.first_name }} {{ worker.user.last_name }}</h5>
-
-                                <div class="d-flex justify-content-between">
-                                    <p class="card-text">
-                                        <strong>Wage:</strong> ₹{{ worker.wage }}
-                                    </p>
-                                    <p class="card-text">
-                                        <strong>Experience:</strong> {{ worker.experience }} Years
-                                    </p>
-                                </div>
-                                {% for customer in customers %}
-                                    {% if worker.user.id == customer.user.id %}
-                                        <p class="card-text">
-                                            <strong>Country:</strong> {{ worker.country }}
-                                        </p>
-                                        <p class="card-text">
-                                            <strong>City:</strong> {{ worker.city }}
-                                        </p>
-                                        <p class="card-text">
-                                            <strong>Location:</strong> {{ customer.location }}
-                                        </p>
-                                    {% endif %}
-                                {% endfor %}
-                                <a href="{% url 'employer_hire' worker.id %}" class="btn btn-primary btn-sm">Hire</a>
-                            </div>
                         </div>
                     </div>
+                </div>
             {% endfor %}
                 {% else %}
                     <div class="col-md-12">
