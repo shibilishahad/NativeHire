@@ -82,14 +82,21 @@ WSGI_APPLICATION = 'NativeHire.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#     'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'Nativehire',
+#         'USER': 'postgres',
+#         'PASSWORD' : '1234',
+#         'HOST': 'localhost',
+#         'PORT': '5432'
+# }
+# }
+
 DATABASES = {
     'default': {
-    'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'nativehire',
-        'USER': 'root',
-        'PASSWORD' : '',
-        'HOST': 'localhost',
-        'PORT': '3306'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
 }
 }
 
@@ -141,5 +148,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'muhammedshadi.mk7@gmail.com'
-EMAIL_HOST_PASSWORD = 'qtkurptryrorzlzi'
+EMAIL_HOST_USER = 'shibili3659@gmail.com'
+EMAIL_HOST_PASSWORD = 'tmyoiavoteattsre'

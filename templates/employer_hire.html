@@ -41,7 +41,7 @@
             <div class="card mb-4">
                 {% for j in customer %}
                 {% if worker.user.id == j.user.id %}
-                <img src="{{ j.profile_pic.url }}" class="card-img-top" alt="Worker Image">
+                <img src="{{ j.profile_pic.url }}" class="card-img-top" alt="Worker Image" style="height:30rem;width:40rem;">
                 {% endif %}
                 {% endfor %}
             </div>

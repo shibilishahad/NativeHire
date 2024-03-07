@@ -6,13 +6,13 @@
 
 <style>
     .custom-select {
-        width: 170px;
-        height: 38px;
+        width: 15rem;
+        height: 2.5rem;
         padding: 0px;
         border: 1px solid #ccc;
         border-radius: 4px;
         box-sizing: border-box;
-        margin-top: 6px;
+        margin-top: 0px;
         margin-bottom: 16px;
         resize: vertical;
     }       
@@ -97,6 +97,25 @@
         cursor: pointer;
     }
 
+    .button-primary{
+
+            background-color: #007BFF;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .btn-primary:hover {
+            background: #fff;
+            color: #007BFF;
+            border: 1px solid #007BFF; 
+        }
+
+
+
 </style>
 <div class="container mt-4">
     <h1 class="text" style="color: white;font-weight:20rem;"><b>Welcome, {{ employer.user.username }}</b></h1>
@@ -160,23 +179,24 @@
             </div>  
         </div>      
         <div class="container-fluid">
-            <form method="get">
-                {{ city_filter_form.city }}
-                <button type="submit" class="btn btn-secondary">Filter by City</button>
-            </form>
-        
-            <form method="get">
-                <input type="text" name="city_search_query" placeholder="Search by City Name" value="{{ city_search_query }}">
-                <button type="submit" class="btn btn-secondary">Search</button>
-            </form>
-        
+            <div class="container row col-12">
+                <form method="get" class="form-inline col-6" style="display:flex;height:2.5rem;width:33rem;">
+                    <input  type="text" name="city_search_query" placeholder="Search by City Name" value="{{ city_search_query }}" class="form-control mr-2" style="margin-right:1rem;">
+                    <button type="submit" class="btn btn-primary" style="width:10rem;height:2.5rem;">Search</button>
+                </form>
+                <form method="get" class="form-inline col-6" style="margin-top:-0.5rem;display:flex;height:2.5rem;width:33rem;margin-right:1rem;">
+                    {{ city_filter_form.city }}
+                    <button type="submit" class="btn btn-primary" style="width:10rem;height:2.5rem;" >Filter by City</button>
+                </form>
+                
+            </div>
+            
             {% if selected_city %}
-            <div class="container" style="font-size: 20px; color: white;">
-                <p>Selected City: {{ selected_city.name }}</p>
+                <div class="container" style="font-size: 20px; color: white;">
+                    <p>Selected City: {{ selected_city.name }}</p>
+                </div>
             {% endif %}
         </div>
-        
-
                     {% if workers %}
                 {% for worker in workers %}
                 <div class="col-md-3">

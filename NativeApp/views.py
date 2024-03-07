@@ -24,6 +24,8 @@ from django.core.exceptions import ValidationError
 from django.db.models import Q
 from .dependencies import is_valid_password, phone_no_is_valid
 from django.core.files.base import ContentFile
+from django.http import JsonResponse
+
 
 
 
@@ -679,6 +681,7 @@ class worker_reg(View):
     
     def send_welcome_email(self, worker):
 
+        # client = Client(account_sid,auth_token)
         # message = client.messages.create(
         #     body = f" Welcome {worker.user.first_name} {worker.user.last_name} ({worker.user.username}), ThankYou for choosing our APP NativeHire.",
         #     from_ = twilio_number,
@@ -712,13 +715,13 @@ class worker_reg(View):
     
 
 
-account_sid = 'AC08b2b61f2aff54d504918f7622023e7f'
-auth_token = '918d01e7c96024dc8c145c0b4fa781a7'
+# account_sid = 'AC08b2b61f2aff54d504918f7622023e7f'
+# auth_token = 'c4b2830047252f025a002bfa82cab346'
 
-twilio_number = '+12563644781'
-target_number = '+918547278372'
+# twilio_number = '+12563644781'
+# target_number = '+918547278372'
 
-client = Client(account_sid,auth_token)
+# client = Client(account_sid,auth_token)
 
 # message = client.messages.create(
 #     body = " This is a test message",

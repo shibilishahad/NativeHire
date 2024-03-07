@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration Page</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'custom.css' %}"
+    <link rel="stylesheet" type="text/css" href="{% static 'custom.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> 
     <style>
         .custom-select {
@@ -36,12 +36,12 @@
         }
 
         .container {
-            max-width: 496px;
-            width: 100%;
+            {% comment %} max-width: 400px;
+            width: 90%; {% endcomment %}
             background: rgba(255, 255, 255, 0.9);
             border-radius: 10px;
             padding: 20px;
-            box-sizing: border-box;
+            {% comment %} box-sizing: border-box; {% endcomment %}
         }
 
         .container h2 {
@@ -161,21 +161,39 @@
             justify-content: space-between;
         }
 
-        .form-group.country {
+        {% comment %} .form-group.country {
             width: 48%;
         }
 
         .form-group.city {
             width: 48%;
+        } {% endcomment %}
+
+
+        .container .btn-primary {
+            background-color: #007BFF;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .container .btn-primary:hover {
+            background: #fff;
+            color: #007BFF;
+            border: 1px solid #007BFF; 
         }
 
 
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Worker Registration</h2>
-        <form method="POST" action="{% url 'worker_reg' %}" enctype="multipart/form-data">
+    <div class="container-fluid d-flex justify-content-center align-content-center row col-12" >
+    <div class="container col-sm-8 col-10" >
+        <h2 style="color:#007BFF;">Worker Registration</h2>
+        <form method="POST" action="{% url 'worker_reg' %}" enctype="multipart/form-data" class="row col-12" style="padding-left:2rem;">
             {% csrf_token %}
             {% if messages %}
                 <ul class="messages">
@@ -188,73 +206,34 @@
                 <label for="user_type">User Type</label>
                 <input type="hidden" id="user_type" name="user_type" value="worker">WORKER
             </div> {% endcomment %}
-            <div class="form-group">
-                <label for="f_name">First Name</label>
-                <input type="text" id="first_name" name="first_name" class="form-control" placeholder="First Name" pattern="[A-Za-z ]+" title="First name must be in english alphabets" required>
+            <div class="form-group col-sm-6 col-12">
+                <label style="margin-bottom:0.2rem;" for="f_name">First Name</label>
+                <input  type="text" id="first_name" name="first_name" class="form-control" placeholder="First Name" pattern="[A-Za-z ]+" title="First name must be in english alphabets" required>
             </div>
             
-            <div class="form-group">
-                <label for="l_name">Last Name</label>
+            <div class="form-group col-sm-6 col-12">
+                <label style="margin-bottom:0.2rem;" for="l_name">Last Name</label>
                 <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Last Name" pattern="[A-Za-z ]+" title="Last name must be in english alphabets" required>
             </div>
-            <div class="form-group">
-                <label for="user_name">User Name</label>
+            <div class="form-group col-sm-6 col-12">
+                <label style="margin-bottom:0.2rem;" for="user_name">User Name</label>
                 <input type="text" id="username" name="username" class="form-control" placeholder="User Name" pattern="[A-Za-z ]+" title="User name must be in english alphabets" required>
             </div>
-            <div class="form-group">
-                <label for="email">Email</label>
+            <div class="form-group col-sm-6 col-12">
+                <label style="margin-bottom:0.2rem;" for="email">Email</label>
                 <input type="email" id="email" class="form-control" name="email" placeholder="Email" pattern="^[^@]+@[^@]+\.(com|in)$" required>
             </div>
-            <div class="row">
-                <div class="form-group country">
-                    <label for="{{ country_city_form.country.id_for_label }}">Country:</label>
-                    {{ country_city_form.country }}
-                </div>
-            </div>
-            <div>
-                <div class="form-group city">
-                    <label for="{{ country_city_form.city.id_for_label }}">City:</label><br>
-                    {{ country_city_form.city }}
-                </div>
-            </div>
             
-            <div class="form-group">
-                <label for="password">Password</label>
-                <i class="password-toggle" onclick="togglePasswordVisibility()">
-                    <i class="fas fa-eye"></i>
-                </i>
-                <div class="input-group">
-                    <input type="password" id="Password" class="form-control" name="password" placeholder="Password" pattern="(?=.\d)(?=.[a-z])(?=.[A-Z])(?=.?[0-9])(?=.[!@#$%^&]).{8,26}" title="Must contain at least one number and one special character one uppercase and lowercase letter, and at least 8 or more characters" required>
-                    <div class="input-group-append">
-                        
-                    </div>
-                </div>
-            </div>
-            
-            <script>
-                function togglePasswordVisibility() {
-                    var passwordInput = document.getElementById("Password");
-                    if (passwordInput.type === "password") {
-                        passwordInput.type = "text";
-                    } else {
-                        passwordInput.type = "password";
-                    }
-                }
-            </script>
-            <div class="mb-3">
-                <label for="c_password" class="form-label">Confirm Password</label>
-                <input type="password" name="c_password" class="form-control" id="c_password" placeholder="Password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}" title="Must contain at least one number and one special character one uppercase and lowercase letter, and at least 8 or more characters" required>
-            </div>
-            <div class="form-group">
-                <label for="phone_no">Phone Number ( +91 )</label>
+            <div class="form-group col-sm-6 col-12">
+                <label style="margin-bottom:0.2rem;" for="phone_no">Phone Number ( +91 )</label>
                 <input type="tel" id="phone_no" name="phone_no" class="form-control" placeholder="Phone Number" maxlength="10" pattern="[0-9]{10}" title="Must have 10 digits" required>
             </div>
-            <div class="form-group">
-                <label for="location">Location</label>
+            <div class="form-group col-sm-6 col-12">
+                <label style="margin-bottom:0.2rem;" for="location">Location</label>
                 <input type="text" id="location" name="location" class="form-control" placeholder="Location" pattern="[A-Za-z ]+" title="Location name must be in english alphabets" required>
             </div>
-            <div class="form-group">
-                <label for="wage">Wage (in INR)</label>
+            <div class="form-group col-sm-6 col-12">
+                <label style="margin-bottom:0.2rem;" for="wage">Wage (in INR)</label>
                 <input type="text" id="wage" name="wage" class="form-control" placeholder="Wage" oninput="validateWage(this)" required>
                 <script>
                 function validateWage(input) {
@@ -277,13 +256,48 @@
                 </script>
 
             </div>
-            <div class="form-group">
-                <label for="experience">Experience (in years)</label>
+            <div class="form-group col-sm-6 col-12">
+                <label style="margin-bottom:0.2rem;" for="experience">Experience (in years)</label>
                 <input type="number" id="experience" name="experience" class="form-control" placeholder="Experience" min=0 max=30 pattern="\d+" required>
             </div>
+            <div class="form-group col-sm-6 col-12">
+                <label  for="password">Password</label>
+                <i class="password-toggle" onclick="togglePasswordVisibility()">
+                    <i class="fas fa-eye"></i>
+                </i>
+                <div class="input-group">
+                    <input type="password" id="Password" class="form-control" name="password" placeholder="Password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}" title="Must contain at least one number and one special character one uppercase and lowercase letter, and at least 8 or more characters" required>
+                    <div class="input-group-append">
+                    </div>
+                </div>
+            </div>
             
-            <div class="form-group">
-                <label for="job_types">Job Type:</label>
+            
+            <script>
+                function togglePasswordVisibility() {
+                    var passwordInput = document.getElementById("Password");
+                    if (passwordInput.type === "password") {
+                        passwordInput.type = "text";
+                    } else {
+                        passwordInput.type = "password";
+                    }
+                }
+            </script>
+            <div class="mb-3 col-sm-6 col-12">
+                <label style="margin-bottom:0.9rem;" for="c_password" class="form-label">Confirm Password</label>
+                <input type="password" name="c_password" class="form-control" id="c_password" placeholder="Password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}" title="Must contain at least one number and one special character one uppercase and lowercase letter, and at least 8 or more characters" required>
+            </div>
+            <div class="form-group country col-sm-6 col-12">
+                <label style="margin-bottom:0.2rem;" for="{{ country_city_form.country.id_for_label }}">Country:</label>
+                {{ country_city_form.country }}
+            </div>
+            <div class="form-group city col-sm-6 col-12">
+                <label style="margin-bottom:0.2rem;" for="{{ country_city_form.city.id_for_label }}">City:</label>
+                {{ country_city_form.city }}
+            </div>
+            
+            <div class="form-group col-sm-6 col-12">
+                <label style="margin-bottom:1rem;" for="job_types">Job Type:  </label>
                 <select id="job_types" name="job_type" required>
                     <option value="" selected disabled>Select a job type</option>
                     {% for job_type in job_types %}
@@ -319,11 +333,11 @@
             </div>             {% endcomment %}
 
             <div class="form-group">
-                <label for="profile_pic">Profile Picture</label>
+                <label style="margin-bottom:1rem;" for="profile_pic">Profile Picture : </label>
                 <input type="file" id="profile_pic" name="profile_pic" class="form-control-file" accept="pics/*" required>
             </div>
 
-            <button type="submit" id="submit_button" onclick="handleLogin()" class="btn btn-primary">Register</button>
+            <button type="submit" id="submit_button" onclick="handleLogin()" srty class="btn btn-primary">Register</button>
         </form>
         <div class="loading-overlay" id="loadingOverlay">
             <div class="loading-spinner"></div>
