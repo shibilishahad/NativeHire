@@ -17,7 +17,7 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from email.mime.image import MIMEImage
 from .forms import CityFilterForm, CountryCityForm
-from twilio.rest import Client
+# from twilio.rest import Client
 import string
 import secrets
 from django.core.exceptions import ValidationError
